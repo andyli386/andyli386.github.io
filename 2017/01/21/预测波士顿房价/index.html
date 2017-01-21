@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://52ml.me">
+  <title>预测波士顿房价 | 52ml</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="模型评价与验证项目 1: 预测波士顿房价欢迎来到机器学习工程师纳米学位的第一个项目！在此文件中，有些示例代码已经提供给你，但你还需要实现更多的功能来让项目成功运行。除非有明确要求，你无须修改任何已给出的代码。以‘练习’开始的标题表示接下来的内容中有需要你必须实现的功能。每一部分都会有详细的指导，需要实现的部分也会在注释中以‘TODO’标出。请仔细阅读所有的提示！
+除了实现代码外，你还必须回答一些与">
+<meta property="og:type" content="article">
+<meta property="og:title" content="预测波士顿房价">
+<meta property="og:url" content="http://52ml.me/2017/01/21/预测波士顿房价/index.html">
+<meta property="og:site_name" content="52ml">
+<meta property="og:description" content="模型评价与验证项目 1: 预测波士顿房价欢迎来到机器学习工程师纳米学位的第一个项目！在此文件中，有些示例代码已经提供给你，但你还需要实现更多的功能来让项目成功运行。除非有明确要求，你无须修改任何已给出的代码。以‘练习’开始的标题表示接下来的内容中有需要你必须实现的功能。每一部分都会有详细的指导，需要实现的部分也会在注释中以‘TODO’标出。请仔细阅读所有的提示！
+除了实现代码外，你还必须回答一些与">
+<meta property="og:image" content="http://52ml.me/boston_housing_files/boston_housing_20_1.png">
+<meta property="og:image" content="http://52ml.me/boston_housing_files/boston_housing_24_0.png">
+<meta property="og:updated_time" content="2017-01-21T07:05:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="预测波士顿房价">
+<meta name="twitter:description" content="模型评价与验证项目 1: 预测波士顿房价欢迎来到机器学习工程师纳米学位的第一个项目！在此文件中，有些示例代码已经提供给你，但你还需要实现更多的功能来让项目成功运行。除非有明确要求，你无须修改任何已给出的代码。以‘练习’开始的标题表示接下来的内容中有需要你必须实现的功能。每一部分都会有详细的指导，需要实现的部分也会在注释中以‘TODO’标出。请仔细阅读所有的提示！
+除了实现代码外，你还必须回答一些与">
+<meta name="twitter:image" content="http://52ml.me/boston_housing_files/boston_housing_20_1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="52ml" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.2d7529.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #4d4d4d"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="https://avatars2.githubusercontent.com/u/1274619?v=3&amp;u=c6a71cc5c764a76986801e43adec5e2e1b7de320&amp;s=140" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Vincent</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/机器学习">机器学习</a></li>
+	        
+				<li><a href="/tags/机器学习工程师纳米学位">纳米学习</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/andyli386" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/u/5705860183" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="weixin" target="_blank" href="/andyli386" title="weixin"><i class="icon-weixin"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars2.githubusercontent.com/u/1274619?v=3&amp;u=c6a71cc5c764a76986801e43adec5e2e1b7de320&amp;s=140" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">Vincent</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/andyli386" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/5705860183" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="weixin" target="_blank" href="/andyli386" title="weixin"><i class="icon-weixin"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/tags/机器学习">机器学习</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/tags/机器学习工程师纳米学位">纳米学习</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-预测波士顿房价" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      预测波士顿房价
+    </h1>
+  
+
+        
+        <a href="/2017/01/21/预测波士顿房价/" class="archive-article-date">
+  	<time datetime="2017-01-21T07:02:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="模型评价与验证"><a href="#模型评价与验证" class="headerlink" title="模型评价与验证"></a>模型评价与验证</h2><h2 id="项目-1-预测波士顿房价"><a href="#项目-1-预测波士顿房价" class="headerlink" title="项目 1: 预测波士顿房价"></a>项目 1: 预测波士顿房价</h2><p>欢迎来到机器学习工程师纳米学位的第一个项目！在此文件中，有些示例代码已经提供给你，但你还需要实现更多的功能来让项目成功运行。除非有明确要求，你无须修改任何已给出的代码。以<strong>‘练习’</strong>开始的标题表示接下来的内容中有需要你必须实现的功能。每一部分都会有详细的指导，需要实现的部分也会在注释中以<strong>‘TODO’</strong>标出。请仔细阅读所有的提示！</p>
+<p>除了实现代码外，你还<strong>必须</strong>回答一些与项目和实现有关的问题。每一个需要你回答的问题都会以<strong>‘问题 X’</strong>为标题。请仔细阅读每个问题，并且在问题后的<strong>‘回答’</strong>文字框中写出完整的答案。你的项目将会根据你对问题的回答和撰写代码所实现的功能来进行评分。</p>
+<blockquote>
+<p><strong>提示：</strong>Code 和 Markdown 区域可通过 <strong>Shift + Enter</strong> 快捷键运行。此外，Markdown可以通过双击进入编辑模式。</p>
+</blockquote>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><a id="more"></a>
+<p>在这个项目中，你将利用马萨诸塞州波士顿郊区的房屋信息数据训练和测试一个模型，并对模型的性能和预测能力进行测试。通过该数据训练后的好的模型可以被用来对房屋做特定预测—尤其是对房屋的价值。对于房地产经纪等人的日常工作来说，这样的预测模型被证明非常有价值。</p>
+<p>此项目的数据集来自<a href="https://archive.ics.uci.edu/ml/datasets/Housing" target="_blank" rel="external">UCI机器学习知识库</a>。波士顿房屋这些数据于1978年开始统计，共506个数据点，涵盖了麻省波士顿不同郊区房屋14种特征的信息。本项目对原始数据集做了以下处理：</p>
+<ul>
+<li>有16个<code>&#39;MEDV&#39;</code> 值为50.0的数据点被移除。 这很可能是由于这些数据点包含<strong>遗失</strong>或<strong>看不到的值</strong>。</li>
+<li>有1个数据点的 <code>&#39;RM&#39;</code> 值为8.78. 这是一个异常值，已经被移除。</li>
+<li>对于本项目，房屋的<code>&#39;RM&#39;</code>， <code>&#39;LSTAT&#39;</code>，<code>&#39;PTRATIO&#39;</code>以及<code>&#39;MEDV&#39;</code>特征是必要的，其余不相关特征已经被移除。</li>
+<li><code>&#39;MEDV&#39;</code>特征的值已经过必要的数学转换，可以反映35年来市场的通货膨胀效应。</li>
+</ul>
+<p>运行下面区域的代码以载入波士顿房屋数据集，以及一些此项目所需的Python库。如果成功返回数据集的大小，表示数据集已载入成功。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Import libraries necessary for this project</span></div><div class="line"><span class="comment"># 载入此项目所需要的库</span></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> visuals <span class="keyword">as</span> vs <span class="comment"># Supplementary code</span></div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> ShuffleSplit</div><div class="line"></div><div class="line"><span class="comment"># Pretty display for notebooks</span></div><div class="line"><span class="comment"># 让结果在notebook中显示</span></div><div class="line">%matplotlib inline</div><div class="line"></div><div class="line"><span class="comment"># Load the Boston housing dataset</span></div><div class="line"><span class="comment"># 载入波士顿房屋的数据集</span></div><div class="line">data = pd.read_csv(<span class="string">'housing.csv'</span>)</div><div class="line">prices = data[<span class="string">'MEDV'</span>]</div><div class="line">features = data.drop(<span class="string">'MEDV'</span>, axis = <span class="number">1</span>)</div><div class="line">    </div><div class="line"><span class="comment"># Success</span></div><div class="line"><span class="comment"># 完成</span></div><div class="line"><span class="keyword">print</span> <span class="string">"Boston housing dataset has &#123;&#125; data points with &#123;&#125; variables each."</span>.format(*data.shape)</div></pre></td></tr></table></figure>
+<pre><code>Boston housing dataset has 489 data points with 4 variables each.
+</code></pre><h2 id="分析数据"><a href="#分析数据" class="headerlink" title="分析数据"></a>分析数据</h2><p>在项目的第一个部分，你会对波士顿房地产数据进行初步的观察并给出你的分析。通过对数据的探索来熟悉数据可以让你更好地理解和解释你的结果。</p>
+<p>由于这个项目的最终目标是建立一个预测房屋价值的模型，我们需要将数据集分为<strong>特征(features)</strong>和<strong>目标变量(target variable)</strong>。<strong>特征</strong> <code>&#39;RM&#39;</code>， <code>&#39;LSTAT&#39;</code>，和 <code>&#39;PTRATIO&#39;</code>，给我们提供了每个数据点的数量相关的信息。<strong>目标变量</strong>：<code>&#39;MEDV&#39;</code>，是我们希望预测的变量。他们分别被存在<code>features</code>和<code>prices</code>两个变量名中。</p>
+<h2 id="练习：基础统计运算"><a href="#练习：基础统计运算" class="headerlink" title="练习：基础统计运算"></a>练习：基础统计运算</h2><p>你的第一个编程练习是计算有关波士顿房价的描述统计数据。我们已为你导入了<code>numpy</code>，你需要使用这个库来执行必要的计算。这些统计数据对于分析模型的预测结果非常重要的。<br>在下面的代码中，你要做的是：</p>
+<ul>
+<li>计算<code>prices</code>中的<code>&#39;MEDV&#39;</code>的最小值、最大值、均值、中值和标准差；</li>
+<li>将运算结果储存在相应的变量中。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># <span class="doctag">TODO:</span> Minimum price of the data</span></div><div class="line"><span class="comment">#目标：计算价值的最小值</span></div><div class="line">minimum_price = np.min(prices)</div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">TODO:</span> Maximum price of the data</span></div><div class="line"><span class="comment">#目标：计算价值的最大值</span></div><div class="line">maximum_price = np.max(prices)</div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">TODO:</span> Mean price of the data</span></div><div class="line"><span class="comment">#目标：计算价值的平均值</span></div><div class="line">mean_price = np.mean(prices)</div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">TODO:</span> Median price of the data</span></div><div class="line"><span class="comment">#目标：计算价值的中值</span></div><div class="line"><span class="keyword">print</span> type(prices)</div><div class="line"></div><div class="line">median_price = np.median(prices)</div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">TODO:</span> Standard deviation of prices of the data</span></div><div class="line"><span class="comment">#目标：计算价值的标准差</span></div><div class="line">std_price = np.std(prices)</div><div class="line"></div><div class="line"><span class="comment"># Show the calculated statistics</span></div><div class="line"><span class="comment">#目标：输出计算的结果</span></div><div class="line"><span class="keyword">print</span> <span class="string">"Statistics for Boston housing dataset:\n"</span></div><div class="line"><span class="keyword">print</span> <span class="string">"Minimum price: $&#123;:,.2f&#125;"</span>.format(minimum_price)</div><div class="line"><span class="keyword">print</span> <span class="string">"Maximum price: $&#123;:,.2f&#125;"</span>.format(maximum_price)</div><div class="line"><span class="keyword">print</span> <span class="string">"Mean price: $&#123;:,.2f&#125;"</span>.format(mean_price)</div><div class="line"><span class="keyword">print</span> <span class="string">"Median price $&#123;:,.2f&#125;"</span>.format(median_price)</div><div class="line"><span class="keyword">print</span> <span class="string">"Standard deviation of prices: $&#123;:,.2f&#125;"</span>.format(std_price)</div></pre></td></tr></table></figure>
+<pre><code>&lt;class &apos;pandas.core.series.Series&apos;&gt;
+Statistics for Boston housing dataset:
+
+Minimum price: $105,000.00
+Maximum price: $1,024,800.00
+Mean price: $454,342.94
+Median price $438,900.00
+Standard deviation of prices: $165,171.13
+</code></pre><h3 id="问题1-特征观察"><a href="#问题1-特征观察" class="headerlink" title="问题1 - 特征观察"></a>问题1 - 特征观察</h3><p>如前文所述，本项目中我们关注的是其中三个值:<code>&#39;RM&#39;</code>、<code>&#39;LSTAT&#39;</code> 和<code>&#39;PTRATIO&#39;</code>，对每一个数据点:</p>
+<ul>
+<li><code>&#39;RM&#39;</code> 是该地区中每个房屋的平均房间数量；</li>
+<li><code>&#39;LSTAT&#39;</code> 是指该地区有多少百分比的房东属于是低收入阶层（有工作但收入微薄）；</li>
+<li><code>&#39;PTRATIO&#39;</code> 是该地区的中学和小学里，学生和老师的数目比（<code>学生/老师</code>）。</li>
+</ul>
+<p><em>凭直觉，上述三个特征中对每一个来说，你认为增大该特征的数值，<code>&#39;MEDV&#39;</code>的值会是<strong>增大</strong>还是<strong>减小</strong>呢？每一个答案都需要你给出理由。</em></p>
+<p><strong>提示：</strong>你预期一个<code>&#39;RM&#39;</code> 值是6的房屋跟<code>&#39;RM&#39;</code> 值是7的房屋相比，价值更高还是更低呢？</p>
+<p><strong>回答: </strong> </p>
+<ul>
+<li>增大RM，MEDV会增大，因为房间多了，房子的总面积会增大，因此MEDV会增大</li>
+<li>增大LATAT，MEDV会减小，因为低收入阶层多了，该地区的消费能力就会降低，因此MEDV会减少</li>
+<li>增大PTRATIO，MEDV会减小，因为学生多老师少，说明该地区教育投入有限，家长不愿意让小孩在这个地方上学，因此MEDV会减少</li>
+</ul>
+<h2 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h2><p>在项目的第二部分中，你需要了解必要的工具和技巧来让你的模型进行预测。用这些工具和技巧对每一个模型的表现做精确的衡量可以极大地增强你预测的信心。</p>
+<h3 id="练习：定义衡量标准"><a href="#练习：定义衡量标准" class="headerlink" title="练习：定义衡量标准"></a>练习：定义衡量标准</h3><p>如果不能对模型的训练和测试的表现进行量化地评估，我们就很难衡量模型的好坏。通常我们会定义一些衡量标准，这些标准可以通过对某些误差或者拟合程度的计算来得到。在这个项目中，你将通过运算<a href="http://stattrek.com/statistics/dictionary.aspx?definition=coefficient_of_determination" target="_blank" rel="external"><em>决定系数</em></a>R<sup>2</sup> 来量化模型的表现。模型的决定系数是回归分析中十分常用的统计信息，经常被当作衡量模型预测能力好坏的标准。</p>
+<p>R<sup>2</sup>的数值范围从0至1，表示<strong>目标变量</strong>的预测值和实际值之间的相关程度平方的百分比。一个模型的R<sup>2</sup> 值为0还不如直接用<strong>平均值</strong>来预测效果好；而一个R<sup>2</sup> 值为1的模型则可以对目标变量进行完美的预测。从0至1之间的数值，则表示该模型中目标变量中有百分之多少能够用<strong>特征</strong>来解释。_模型也可能出现负值的R<sup>2</sup>，这种情况下模型所做预测有时会比直接计算目标变量的平均值差很多。</p>
+<p>在下方代码的 <code>performance_metric</code> 函数中，你要实现：</p>
+<ul>
+<li>使用 <code>sklearn.metrics</code> 中的 <code>r2_score</code> 来计算 <code>y_true</code> 和 <code>y_predict</code>的R<sup>2</sup>值，作为对其表现的评判。</li>
+<li>将他们的表现评分储存到<code>score</code>变量中。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># <span class="doctag">TODO:</span> Import 'r2_score'</span></div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> r2_score</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">performance_metric</span><span class="params">(y_true, y_predict)</span>:</span></div><div class="line">    <span class="string">""" Calculates and returns the performance score between </span></div><div class="line">        true and predicted values based on the metric chosen. """</div><div class="line">    </div><div class="line">    <span class="comment"># <span class="doctag">TODO:</span> Calculate the performance score between 'y_true' and 'y_predict'</span></div><div class="line">    score = r2_score(y_true, y_predict)</div><div class="line">    </div><div class="line">    <span class="comment"># Return the score</span></div><div class="line">    <span class="keyword">return</span> score</div></pre></td></tr></table></figure>
+<h3 id="问题2-拟合程度"><a href="#问题2-拟合程度" class="headerlink" title="问题2 - 拟合程度"></a>问题2 - 拟合程度</h3><p>假设一个数据集有五个数据且一个模型做出下列目标变量的预测：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">真实数值</th>
+<th style="text-align:center">预测数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">3.0</td>
+<td style="text-align:center">2.5</td>
+</tr>
+<tr>
+<td style="text-align:center">-0.5</td>
+<td style="text-align:center">0.0</td>
+</tr>
+<tr>
+<td style="text-align:center">2.0</td>
+<td style="text-align:center">2.1</td>
+</tr>
+<tr>
+<td style="text-align:center">7.0</td>
+<td style="text-align:center">7.8</td>
+</tr>
+<tr>
+<td style="text-align:center">4.2</td>
+<td style="text-align:center">5.3</td>
+</tr>
+</tbody>
+</table>
+<p><em>你会觉得这个模型已成功地描述了目标变量的变化吗？如果成功，请解释为什么，如果没有，也请给出原因。</em>  </p>
+<p>运行下方的代码，使用<code>performance_metric</code>函数来计算模型的决定系数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Calculate the performance of this model</span></div><div class="line">score = performance_metric([<span class="number">3</span>, <span class="number">-0.5</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">4.2</span>], [<span class="number">2.5</span>, <span class="number">0.0</span>, <span class="number">2.1</span>, <span class="number">7.8</span>, <span class="number">5.3</span>])</div><div class="line"><span class="keyword">print</span> <span class="string">"Model has a coefficient of determination, R^2, of &#123;:.3f&#125;."</span>.format(score)</div></pre></td></tr></table></figure>
+<pre><code>Model has a coefficient of determination, R^2, of 0.923.
+</code></pre><p><strong>回答:</strong></p>
+<p>已经成功的描述了目标变量的变化，因为决定系数已经非常高了。</p>
+<h3 id="练习-数据分割与重排"><a href="#练习-数据分割与重排" class="headerlink" title="练习: 数据分割与重排"></a>练习: 数据分割与重排</h3><p>接下来，你需要把波士顿房屋数据集分成训练和测试两个子集。通常在这个过程中，数据也会被重新排序，以消除数据集中由于排序而产生的偏差。<br>在下面的代码中，你需要：</p>
+<ul>
+<li>使用 <code>sklearn.cross_validation</code> 中的 <code>train_test_split</code>， 将<code>features</code>和<code>prices</code>的数据都分成用于训练的数据子集和用于测试的数据子集。<ul>
+<li>分割比例为：80%的数据用于训练，20%用于测试；</li>
+<li>选定一个数值以设定 <code>train_test_split</code> 中的 <code>random_state</code> ，这会确保结果的一致性；</li>
+</ul>
+</li>
+<li>最终分离出的子集为<code>X_train</code>,<code>X_test</code>,<code>y_train</code>,和<code>y_test</code>。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># <span class="doctag">TODO:</span> Import 'train_test_split'</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> train_test_split</div><div class="line"><span class="comment"># <span class="doctag">TODO:</span> Shuffle and split the data into training and testing subsets</span></div><div class="line">X_train, X_test, y_train, y_test = train_test_split(features, prices, test_size=<span class="number">0.2</span>, random_state=<span class="number">30</span>)</div><div class="line"></div><div class="line"><span class="comment"># Success</span></div><div class="line"><span class="keyword">print</span> <span class="string">"Training and testing split was successful."</span></div></pre></td></tr></table></figure>
+<pre><code>Training and testing split was successful.
+</code></pre><h3 id="问题-3-训练及测试"><a href="#问题-3-训练及测试" class="headerlink" title="问题 3- 训练及测试"></a>问题 3- 训练及测试</h3><p><em>将数据集按一定比例分为训练用的数据集和测试用的数据集对学习算法有什么好处？</em></p>
+<p><strong>提示：</strong> 如果没有数据来对模型进行测试，会出现什么问题？</p>
+<p><strong>答案: </strong></p>
+<p>测试可以用来评估模型对未知数据的预测能力。如果没有进行测试，就无法得知对未知数据的预测是否可靠。</p>
+<hr>
+<h2 id="分析模型的表现"><a href="#分析模型的表现" class="headerlink" title="分析模型的表现"></a>分析模型的表现</h2><p>在项目的第三部分，我们来看一下几个模型针对不同的数据集在学习和测试上的表现。另外，你需要专注于一个特定的算法，用全部训练集训练时，提高它的<code>&#39;max_depth&#39;</code> 参数，观察这一参数的变化如何影响模型的表现。把你模型的表现画出来对于分析过程十分有益。可视化可以让我们看到一些单看结果看不到的行为。</p>
+<h3 id="学习曲线"><a href="#学习曲线" class="headerlink" title="学习曲线"></a>学习曲线</h3><p>下方区域内的代码会输出四幅图像，它们是一个决策树模型在不同最大深度下的表现。每一条曲线都直观的显示了随着训练数据量的增加，模型学习曲线的训练评分和测试评分的变化。注意，曲线的阴影区域代表的是该曲线的不确定性（用标准差衡量）。这个模型的训练和测试部分都使用决定系数R<sup>2</sup>来评分。</p>
+<p>运行下方区域中的代码，并利用输出的图形回答下面的问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Produce learning curves for varying training set sizes and maximum depths</span></div><div class="line">vs.ModelLearning(features, prices)</div></pre></td></tr></table></figure>
+<pre><code>/Users/vincent/anaconda/envs/dato-env/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+  if self._edgecolors == str(&apos;face&apos;):
+</code></pre><p><img src="boston_housing_files/boston_housing_20_1.png" alt="png"></p>
+<h3 id="问题-4-学习数据"><a href="#问题-4-学习数据" class="headerlink" title="问题 4 - 学习数据"></a>问题 4 - 学习数据</h3><p><em>选择上述图像中的其中一个，并给出其最大深度。随着训练数据量的增加，训练曲线的评分有怎样的变化？测试曲线呢？如果有更多的训练数据，是否能有效提升模型的表现呢？</em><br><strong>提示：</strong>学习曲线的评分是否最终会收敛到特定的值？</p>
+<p><strong>答案: </strong></p>
+<p>max_depth=3时，开始随着训练数据量增加，训练数据0-50时，训练曲线的评分逐渐减少，测试曲线开始阶段增加很快；训练数据50之后，测试曲线逐渐趋于某个特定的数值0.8。数据量足够大时再增加训练数据不能有效提升模型的表现。</p>
+<h3 id="复杂度曲线"><a href="#复杂度曲线" class="headerlink" title="复杂度曲线"></a>复杂度曲线</h3><p>下列代码内的区域会输出一幅图像，它展示了一个已经经过训练和验证的决策树模型在不同最大深度条件下的表现。这个图形将包含两条曲线，一个是训练的变化，一个是测试的变化。跟<strong>学习曲线</strong>相似，阴影区域代表该曲线的不确定性，模型训练和测试部分的评分都用的 <code>performance_metric</code> 函数。</p>
+<p>运行下方区域中的代码，并利用输出的图形并回答下面的两个问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vs.ModelComplexity(X_train, y_train)</div></pre></td></tr></table></figure>
+<p><img src="boston_housing_files/boston_housing_24_0.png" alt="png"></p>
+<h3 id="问题-5-偏差与方差之间的权衡取舍"><a href="#问题-5-偏差与方差之间的权衡取舍" class="headerlink" title="问题 5- 偏差与方差之间的权衡取舍"></a>问题 5- 偏差与方差之间的权衡取舍</h3><p><em>当模型以最大深度 1训练时，模型的预测是出现很大的偏差还是出现了很大的方差？当模型以最大深度10训练时，情形又如何呢？图形中的哪些特征能够支持你的结论？</em></p>
+<p><strong>提示：</strong> 你如何得知模型是否出现了偏差很大或者方差很大的问题？</p>
+<p><strong>答案: </strong><br>最大深度1训练时，出现了很大的偏差，因为评分最低阴影区域相对集中并且训练和测试得分都不高，最大深度10训练时，出现了很大的方差，因为评分相对比较高，但是阴影区域范围大，并且训练得分和测试得分相差比较大。</p>
+<h3 id="问题-6-最优模型的猜测"><a href="#问题-6-最优模型的猜测" class="headerlink" title="问题 6- 最优模型的猜测"></a>问题 6- 最优模型的猜测</h3><p><em>你认为最大深度是多少的模型能够最好地对未见过的数据进行预测？为什么你会得出了这个答案？</em></p>
+<p><strong>答案: </strong></p>
+<p>最大深度为4时可以最好的对未见过的数据进行预测，因为这是评分最高，而且阴影区域波动相对较小。</p>
+<hr>
+<h2 id="评价模型表现"><a href="#评价模型表现" class="headerlink" title="评价模型表现"></a>评价模型表现</h2><p>在这个项目的最后，你将自己建立模型，并使用最优化的<code>fit_model</code>函数，基于客户房子的特征来预测该房屋的价值。</p>
+<h3 id="问题-7-网格搜索（Grid-Search）"><a href="#问题-7-网格搜索（Grid-Search）" class="headerlink" title="问题 7- 网格搜索（Grid Search）"></a>问题 7- 网格搜索（Grid Search）</h3><p><em>什么是网格搜索法？如何用它来优化学习算法？</em></p>
+<p><strong>回答: </strong></p>
+<p>用于系统地遍历多种参数组合，通过交叉验证确定最佳效果参数。</p>
+<h3 id="问题-8-交叉验证"><a href="#问题-8-交叉验证" class="headerlink" title="问题 8- 交叉验证"></a>问题 8- 交叉验证</h3><p><em>什么是K折交叉验证法（k-fold cross-validation）？优化模型时，使用这种方法对网格搜索有什么好处？</em> </p>
+<p><strong>提示：</strong> 跟为何需要一组训练集的原因差不多，网格搜索时如果不使用交叉验证会有什么问题？</p>
+<p><strong>答案: </strong></p>
+<p>将数据集分成K份，每一次训练都选取其中一份用来做测试，其他用来训练，训练K次，最后求出平均值。可以选择最佳的参数组合。K折交叉验证法可以验证网格搜索到的参数是否可以达到最佳效果。</p>
+<h3 id="练习：训练模型"><a href="#练习：训练模型" class="headerlink" title="练习：训练模型"></a>练习：训练模型</h3><p>在最后一个练习中，你将需要将所学到的内容整合，使用<strong>决策树演算法</strong>训练一个模型。为了保证你得出的是一个最优模型，你需要使用网格搜索法训练模型，以找到最佳的 <code>&#39;max_depth&#39;</code> 参数。你可以把<code>&#39;max_depth&#39;</code> 参数理解为决策树算法在做出预测前，允许其对数据提出问题的数量。决策树是<strong>监督学习算法</strong>中的一种。</p>
+<p>此外，你会发现你的实现使用的是 <code>ShuffleSplit()</code> 。它也是交叉验证的一种方式（见变量 <code>&#39;cv_sets&#39;</code>）。虽然这不是<strong>问题8</strong>中描述的 K-Fold 交叉验证，这个教程验证方法也很有用！这里 <code>ShuffleSplit()</code> 会创造十个混洗过的集合，每个集合中20%(<code>&#39;test_size&#39;</code>)的数据会被用作<strong>验证集</strong>。当你在实现的时候，想一想这跟 K-Fold 交叉验证有哪些相同点，哪些不同点？</p>
+<p>在下方 <code>fit_model</code> 函数中，你需要做的是：</p>
+<ul>
+<li>使用  <code>sklearn.tree</code> 中的 <a href="http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html" target="_blank" rel="external"><code>DecisionTreeRegressor</code></a> 创建一个决策树的回归函数；<ul>
+<li>将这个回归函数储存到 <code>&#39;regressor&#39;</code> 变量中；</li>
+</ul>
+</li>
+<li>为 <code>&#39;max_depth&#39;</code> 创造一个字典，它的值是从1至10的数组，并储存到 <code>&#39;params&#39;</code> 变量中；</li>
+<li>使用 <code>sklearn.metrics</code> 中的 <a href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html" target="_blank" rel="external"><code>make_scorer</code></a>  创建一个评分函数；<ul>
+<li>将 <code>performance_metric</code> 作为参数传至这个函数中；</li>
+<li>将评分函数储存到 <code>&#39;scoring_fnc&#39;</code> 变量中；</li>
+</ul>
+</li>
+<li>使用 <code>sklearn.grid_search</code> 中的 <a href="http://scikit-learn.org/stable/modules/generated/sklearn.grid_search.GridSearchCV.html" target="_blank" rel="external"><code>GridSearchCV</code></a> 创建一个网格搜索对象；<ul>
+<li>将变量<code>&#39;regressor&#39;</code>, <code>&#39;params&#39;</code>, <code>&#39;scoring_fnc&#39;</code>, 和 <code>&#39;cv_sets&#39;</code> 作为参数传至这个对象中；</li>
+<li>将 <code>GridSearchCV</code> 存到 <code>&#39;grid&#39;</code> 变量中。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># <span class="doctag">TODO:</span> Import 'make_scorer', 'DecisionTreeRegressor', and 'GridSearchCV'</span></div><div class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeRegressor</div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> make_scorer</div><div class="line"><span class="keyword">from</span> sklearn.grid_search <span class="keyword">import</span> GridSearchCV</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fit_model</span><span class="params">(X, y)</span>:</span></div><div class="line">    <span class="string">""" Performs grid search over the 'max_depth' parameter for a </span></div><div class="line">        decision tree regressor trained on the input data [X, y]. """</div><div class="line">    </div><div class="line">    <span class="comment"># Create cross-validation sets from the training data</span></div><div class="line">    cv_sets = ShuffleSplit(X.shape[<span class="number">0</span>], n_iter = <span class="number">10</span>, test_size = <span class="number">0.20</span>, random_state = <span class="number">0</span>)</div><div class="line"></div><div class="line">    <span class="comment"># <span class="doctag">TODO:</span> Create a decision tree regressor object</span></div><div class="line">    regressor = DecisionTreeRegressor(random_state=<span class="number">30</span>)</div><div class="line"></div><div class="line">    <span class="comment"># <span class="doctag">TODO:</span> Create a dictionary for the parameter 'max_depth' with a range from 1 to 10</span></div><div class="line">    params = &#123;<span class="string">'max_depth'</span>:[i+<span class="number">1</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)]&#125;</div><div class="line"></div><div class="line">    <span class="comment"># <span class="doctag">TODO:</span> Transform 'performance_metric' into a scoring function using 'make_scorer' </span></div><div class="line">    scoring_fnc = make_scorer(performance_metric)</div><div class="line"></div><div class="line">    <span class="comment"># <span class="doctag">TODO:</span> Create the grid search object</span></div><div class="line">    grid = GridSearchCV(regressor, params, scoring=scoring_fnc, cv=cv_sets) </div><div class="line"></div><div class="line">    <span class="comment"># Fit the grid search object to the data to compute the optimal model</span></div><div class="line">    grid = grid.fit(X, y)</div><div class="line"></div><div class="line">    <span class="comment"># Return the optimal model after fitting the data</span></div><div class="line">    <span class="keyword">return</span> grid.best_estimator_</div></pre></td></tr></table></figure>
+<h3 id="做出预测"><a href="#做出预测" class="headerlink" title="做出预测"></a>做出预测</h3><p>当我们用数据训练出一个模型，它现在就可用于对新的数据进行预测。在决策树回归函数中，模型已经学会对新输入的数据<em>提问</em>，并返回对<strong>目标变量</strong>的预测值。你可以用这个预测来获取数据未知目标变量的信息，这些数据必须是不包含在训练数据之内的。</p>
+<h3 id="问题-9-最优模型"><a href="#问题-9-最优模型" class="headerlink" title="问题 9- 最优模型"></a>问题 9- 最优模型</h3><p><em>最优模型的最大深度（maximum depth）是多少？此答案与你在<strong>问题 6</strong>所做的猜测是否相同？</em></p>
+<p>运行下方区域内的代码，将决策树回归函数代入训练数据的集合，以得到最优化的模型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Fit the training data to the model using grid search</span></div><div class="line">reg = fit_model(X_train, y_train)</div><div class="line"></div><div class="line"><span class="comment"># Produce the value for 'max_depth'</span></div><div class="line"><span class="keyword">print</span> <span class="string">"Parameter 'max_depth' is &#123;&#125; for the optimal model."</span>.format(reg.get_params()[<span class="string">'max_depth'</span>])</div></pre></td></tr></table></figure>
+<pre><code>Parameter &apos;max_depth&apos; is 4 for the optimal model.
+</code></pre><p><strong>Answer: </strong> 4，与问题6中的猜测相同。</p>
+<h3 id="问题-10-预测销售价格"><a href="#问题-10-预测销售价格" class="headerlink" title="问题 10 - 预测销售价格"></a>问题 10 - 预测销售价格</h3><p>想像你是一个在波士顿地区的房屋经纪人，并期待使用此模型以帮助你的客户评估他们想出售的房屋。你已经从你的三个客户收集到以下的资讯:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">特征</th>
+<th style="text-align:center">客戶 1</th>
+<th style="text-align:center">客戶 2</th>
+<th style="text-align:center">客戶 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">房屋内房间总数</td>
+<td style="text-align:center">5 间房间</td>
+<td style="text-align:center">4 间房间</td>
+<td style="text-align:center">8 间房间</td>
+</tr>
+<tr>
+<td style="text-align:center">社区贫困指数（％被认为是贫困阶层）</td>
+<td style="text-align:center">17%</td>
+<td style="text-align:center">32%</td>
+<td style="text-align:center">3%</td>
+</tr>
+<tr>
+<td style="text-align:center">邻近学校的学生-老师比例</td>
+<td style="text-align:center">15：1</td>
+<td style="text-align:center">22：1</td>
+<td style="text-align:center">12：1</td>
+</tr>
+</tbody>
+</table>
+<p><em>你会建议每位客户的房屋销售的价格为多少？从房屋特征的数值判断，这样的价格合理吗？</em> </p>
+<p><strong>提示：</strong>用你在<strong>分析数据</strong>部分计算出来的统计信息来帮助你证明你的答案。</p>
+<p>运行下列的代码区域，使用你优化的模型来为每位客户的房屋价值做出预测。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Produce a matrix for client data</span></div><div class="line">client_data = [[<span class="number">5</span>, <span class="number">17</span>, <span class="number">15</span>], <span class="comment"># Client 1</span></div><div class="line">               [<span class="number">4</span>, <span class="number">32</span>, <span class="number">22</span>], <span class="comment"># Client 2</span></div><div class="line">               [<span class="number">8</span>, <span class="number">3</span>, <span class="number">12</span>]]  <span class="comment"># Client 3</span></div><div class="line"></div><div class="line"><span class="comment"># Show predictions</span></div><div class="line"><span class="keyword">for</span> i, price <span class="keyword">in</span> enumerate(reg.predict(client_data)):</div><div class="line">    <span class="keyword">print</span> <span class="string">"Predicted selling price for Client &#123;&#125;'s home: $&#123;:,.2f&#125;"</span>.format(i+<span class="number">1</span>, price)</div></pre></td></tr></table></figure>
+<pre><code>Predicted selling price for Client 1&apos;s home: $409,752.00
+Predicted selling price for Client 2&apos;s home: $220,886.84
+Predicted selling price for Client 3&apos;s home: $937,650.00
+</code></pre><p><strong>答案: </strong></p>
+<ul>
+<li>客户1 409,752.00 合理，有5间房间，社会贫困指数不到1/5，学生老师比中等水平</li>
+<li>客户2 220,886.84 合理，只有4间房间，社会贫困指数比较高，学生老师比最高，该地区对教育投入有限，家长不愿意在这里买房</li>
+<li>客户3 937,650.00 合理，有8间房，贫困指数非常低，学生老师比最低，该地区应该是富人区，所以房间贵</li>
+</ul>
+<h3 id="敏感度"><a href="#敏感度" class="headerlink" title="敏感度"></a>敏感度</h3><p>一个最优的模型不一定是一个健壮模型。有的时候模型会过于复杂或者过于简单，以致于难以泛化新增添的数据；有的时候模型采用的学习算法并不适用于特定的数据结构；有的时候样本本身可能有太多噪点或样本过少，使得模型无法准确地预测目标变量。这些情况下我们会说模型是欠拟合的。执行下方区域中的代码，采用不同的训练和测试集执行 <code>fit_model</code> 函数10次。注意观察对一个特定的客户来说，预测是如何随训练数据的变化而变化的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vs.PredictTrials(features, prices, fit_model, client_data)</div></pre></td></tr></table></figure>
+<pre><code>Trial 1: $391,183.33
+Trial 2: $411,417.39
+Trial 3: $415,800.00
+Trial 4: $428,316.00
+Trial 5: $413,334.78
+Trial 6: $411,931.58
+Trial 7: $399,663.16
+Trial 8: $407,232.00
+Trial 9: $402,531.82
+Trial 10: $413,700.00
+
+Range in prices: $37,132.67
+</code></pre><h3 id="问题-11-实用性探讨"><a href="#问题-11-实用性探讨" class="headerlink" title="问题 11 - 实用性探讨"></a>问题 11 - 实用性探讨</h3><p><em>简单地讨论一下你建构的模型能否在现实世界中使用？</em> </p>
+<p><strong>提示：</strong> 回答几个问题：</p>
+<ul>
+<li><em>1978年所采集的数据，在今天是否仍然适用？</em></li>
+<li><em>数据中呈现的特征是否足够描述一个房屋？</em></li>
+<li><em>模型是否足够健壮来保证预测的一致性？</em></li>
+<li><em>在波士顿这样的大都市采集的数据，能否应用在其它乡镇地区？</em></li>
+</ul>
+<p><strong>答案: </strong></p>
+<ul>
+<li>不能够，要考虑到通货膨胀等因素</li>
+<li>不够，还要有房子的新旧程度，房子面子，是否有车库游泳池等</li>
+<li>可以保证一致性，因为波动范围比较小</li>
+<li>不适用其他乡镇地区</li>
+<li>综上，该模型不适合在现实世界中使用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<hr>
+<p>博客地址：<a href="http://www.52ml.me" target="_blank" rel="external">52ml.me</a><br><br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">Creative Commons BY-NC-ND 3.0</a></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><br></h2>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">机器学习工程师纳米学位</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://52ml.me/2017/01/21/预测波士顿房价/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/01/28/Android-彩蛋路径/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android 彩蛋路径</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
+  
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 Vincent
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: false
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.2d7529.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ml</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习计划</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">cs231n</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">机器学习工程师纳米学位</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">我是Vincent&lt;br&gt;&lt;br&gt;热衷于机器学习，移动应用开发，&lt;br&gt;欢迎交流！</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

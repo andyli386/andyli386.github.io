@@ -25,7 +25,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render: [README.md, ori_data/*, ori_data/posts/*, ori_data/tags/*, ori_data/categories/*, ori_data/themes/next/*, ori_data/sh/*, ori_data/scaffolds/*]
+skip_render: [README.md, ori_data/*, ori_data/posts/*, ori_data/tags/*, ori_data/categories/*, ori_data/themes/yilia/*, ori_data/sh/*, ori_data/scaffolds/*, _posts/*.html]
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -65,6 +65,18 @@ pagination_dir: page
 ## Themes: http://hexo.io/themes/
 theme: yilia
 
+# Deployment
+## Docs: http://hexo.io/docs/deployment.html
+deploy:
+- type: git
+  repo: ssh://git@162.243.93.51:9527/home/git/repos/52ml.me.git
+  branch: master
+  message:
+- type: git
+  repo: git@github.com:andyli386/andyli386.github.io
+  branch: master
+  message:
+
 jsonContent:
     meta: false
     pages: false
@@ -83,14 +95,3 @@ jsonContent:
       excerpt: false
       categories: false
       tags: true
-# Deployment
-## Docs: http://hexo.io/docs/deployment.html
-deploy:
-- type: git
-  repo: ssh://git@162.243.93.51:9527/home/git/repos/52ml.me.git
-  branch: master
-  message:
-- type: git
-  repo: git@github.com:andyli386/andyli386.github.io
-  branch: master
-  message:
