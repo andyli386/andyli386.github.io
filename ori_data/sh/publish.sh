@@ -7,5 +7,5 @@ cp scaffolds/* source/ori_data/scaffolds/
 cd $BLOGHOME/source/
 git add .
 git commit -m "Update blog"
-git push origin master
+git push blog master
 hexo g && hexo d
