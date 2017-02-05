@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="52ml">
 <meta property="og:description" content="模型评价与验证项目 1: 预测波士顿房价欢迎来到机器学习工程师纳米学位的第一个项目！在此文件中，有些示例代码已经提供给你，但你还需要实现更多的功能来让项目成功运行。除非有明确要求，你无须修改任何已给出的代码。以‘练习’开始的标题表示接下来的内容中有需要你必须实现的功能。每一部分都会有详细的指导，需要实现的部分也会在注释中以‘TODO’标出。请仔细阅读所有的提示！
 除了实现代码外，你还必须回答一些与">
-<meta property="og:image" content="http://52ml.me/boston_housing_files/boston_housing_20_1.png">
-<meta property="og:image" content="http://52ml.me/boston_housing_files/boston_housing_24_0.png">
-<meta property="og:updated_time" content="2017-01-21T08:02:23.000Z">
+<meta property="og:image" content="http://52ml.me/assets/img/boston_housing_files/boston_housing_20_1.png">
+<meta property="og:image" content="http://52ml.me/assets/img/boston_housing_files/boston_housing_24_0.png">
+<meta property="og:updated_time" content="2017-02-05T07:13:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="预测波士顿房价">
 <meta name="twitter:description" content="模型评价与验证项目 1: 预测波士顿房价欢迎来到机器学习工程师纳米学位的第一个项目！在此文件中，有些示例代码已经提供给你，但你还需要实现更多的功能来让项目成功运行。除非有明确要求，你无须修改任何已给出的代码。以‘练习’开始的标题表示接下来的内容中有需要你必须实现的功能。每一部分都会有详细的指导，需要实现的部分也会在注释中以‘TODO’标出。请仔细阅读所有的提示！
 除了实现代码外，你还必须回答一些与">
-<meta name="twitter:image" content="http://52ml.me/boston_housing_files/boston_housing_20_1.png">
+<meta name="twitter:image" content="http://52ml.me/assets/img/boston_housing_files/boston_housing_20_1.png">
   
     <link rel="alternative" href="/atom.xml" title="52ml" type="application/atom+xml">
   
@@ -292,14 +292,14 @@ Standard deviation of prices: $165,171.13
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Produce learning curves for varying training set sizes and maximum depths</span></div><div class="line">vs.ModelLearning(features, prices)</div></pre></td></tr></table></figure>
 <pre><code>/Users/vincent/anaconda/envs/dato-env/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
   if self._edgecolors == str(&apos;face&apos;):
-</code></pre><p><img src="boston_housing_files/boston_housing_20_1.png" alt="png"></p>
+</code></pre><p><img src="/assets/img/boston_housing_files/boston_housing_20_1.png" alt="png"></p>
 <h3 id="问题-4-学习数据"><a href="#问题-4-学习数据" class="headerlink" title="问题 4 - 学习数据"></a>问题 4 - 学习数据</h3><p><em>选择上述图像中的其中一个，并给出其最大深度。随着训练数据量的增加，训练曲线的评分有怎样的变化？测试曲线呢？如果有更多的训练数据，是否能有效提升模型的表现呢？</em><br><strong>提示：</strong>学习曲线的评分是否最终会收敛到特定的值？</p>
 <p><strong>答案: </strong></p>
 <p>max_depth=3时，开始随着训练数据量增加，训练数据0-50时，训练曲线的评分逐渐减少，测试曲线开始阶段增加很快；训练数据50之后，测试曲线逐渐趋于某个特定的数值0.8。数据量足够大时再增加训练数据不能有效提升模型的表现。</p>
 <h3 id="复杂度曲线"><a href="#复杂度曲线" class="headerlink" title="复杂度曲线"></a>复杂度曲线</h3><p>下列代码内的区域会输出一幅图像，它展示了一个已经经过训练和验证的决策树模型在不同最大深度条件下的表现。这个图形将包含两条曲线，一个是训练的变化，一个是测试的变化。跟<strong>学习曲线</strong>相似，阴影区域代表该曲线的不确定性，模型训练和测试部分的评分都用的 <code>performance_metric</code> 函数。</p>
 <p>运行下方区域中的代码，并利用输出的图形并回答下面的两个问题。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vs.ModelComplexity(X_train, y_train)</div></pre></td></tr></table></figure>
-<p><img src="boston_housing_files/boston_housing_24_0.png" alt="png"></p>
+<p><img src="/assets/img/boston_housing_files/boston_housing_24_0.png" alt="png"></p>
 <h3 id="问题-5-偏差与方差之间的权衡取舍"><a href="#问题-5-偏差与方差之间的权衡取舍" class="headerlink" title="问题 5- 偏差与方差之间的权衡取舍"></a>问题 5- 偏差与方差之间的权衡取舍</h3><p><em>当模型以最大深度 1训练时，模型的预测是出现很大的偏差还是出现了很大的方差？当模型以最大深度10训练时，情形又如何呢？图形中的哪些特征能够支持你的结论？</em></p>
 <p><strong>提示：</strong> 你如何得知模型是否出现了偏差很大或者方差很大的问题？</p>
 <p><strong>答案: </strong><br>最大深度1训练时，出现了很大的偏差，因为评分最低阴影区域相对集中并且训练和测试得分都不高，最大深度10训练时，出现了很大的方差，因为评分相对比较高，但是阴影区域范围大，并且训练得分和测试得分相差比较大。</p>
@@ -458,11 +458,15 @@ Range in prices: $37,132.67
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">机器学习工程师纳米学位</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">纳米学位</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MLND</a>
         		</li>
       		
 		</ul>
@@ -531,6 +535,15 @@ Range in prices: $37,132.67
 
   
 <nav id="article-nav">
+  
+    <a href="/2017/02/05/Predicting-daily-bike-rental-ridership/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Predicting daily bike rental ridership
+        
+      </div>
+    </a>
   
   
     <a href="/2016/01/28/Android-彩蛋路径/" id="article-nav-older" class="article-nav-link-wrap">
@@ -646,15 +659,23 @@ Range in prices: $37,132.67
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">机器学习工程师纳米学位 机器学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">机器学习工程师纳米学位</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DLND</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">纳米学位</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MLND</a>
               </li>
             
             <div class="clearfix"></div>
