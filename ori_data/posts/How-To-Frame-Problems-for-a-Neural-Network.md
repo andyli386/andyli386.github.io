@@ -167,9 +167,6 @@ for i in range(len(reviews)):
 positive_counts.most_common()
 ```
 
-
-
-
     [('', 550468),
      ('the', 173324),
      ('.', 159654),
