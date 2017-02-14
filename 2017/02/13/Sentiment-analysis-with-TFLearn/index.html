@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://52ml.me/2017/02/13/Sentiment-analysis-with-TFLearn/index.html">
 <meta property="og:site_name" content="52ml">
 <meta property="og:description" content="Sentiment analysis with TFLearnIn this notebook, we’ll continue Andrew Trask’s work by building a network for sentiment analysis on the movie review data. Instead of a network written with Numpy, we’l">
-<meta property="og:updated_time" content="2017-02-14T09:40:24.000Z">
+<meta property="og:updated_time" content="2017-02-14T09:51:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sentiment analysis with TFLearn">
 <meta name="twitter:description" content="Sentiment analysis with TFLearnIn this notebook, we’ll continue Andrew Trask’s work by building a network for sentiment analysis on the movie review data. Instead of a network written with Numpy, we’l">
@@ -172,7 +172,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="Sentiment-analysis-with-TFLearn"><a href="#Sentiment-analysis-with-TFLearn" class="headerlink" title="Sentiment analysis with TFLearn"></a>Sentiment analysis with TFLearn</h1><p>In this notebook, we’ll continue Andrew Trask’s work by building a network for sentiment analysis on the movie review data. Instead of a network written with Numpy, we’ll be using <a href="http://tflearn.org/" target="_blank" rel="external">TFLearn</a>, a high-level library built on top of TensorFlow. TFLearn makes it simpler to build networks just by defining the layers. It takes care of most of the details for you.</p>
-<p>We’ll start off by importing all the modules we’ll need, then load and prepare the data.</p>
+<p>We’ll start off by importing all the modules we’ll need, then load and prepare the data.<br><a id="more"></a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">import</span> tflearn</div><div class="line"><span class="keyword">from</span> tflearn.data_utils <span class="keyword">import</span> to_categorical</div></pre></td></tr></table></figure>
 <h2 id="Preparing-the-data"><a href="#Preparing-the-data" class="headerlink" title="Preparing the data"></a>Preparing the data</h2><p>Following along with Andrew, our goal here is to convert our reviews into word vectors. The word vectors will have elements representing words in the total vocabulary. If the second position represents the word ‘the’, for each review we’ll count up the number of times ‘the’ appears in the text and set the second position to that count. I’ll show you examples as we build the input data from the reviews data. Check out Andrew’s notebook and video for more about this.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">reviews = pd.read_csv(<span class="string">'reviews.txt'</span>, header=<span class="keyword">None</span>)</div><div class="line">labels = pd.read_csv(<span class="string">'labels.txt'</span>, header=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
@@ -521,6 +521,10 @@ Training Step: 63853  | total loss: [1m[32m0.00783[0m[0m
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习计划</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">纳米学位</a>
               </li>
              
@@ -530,10 +534,6 @@ Training Step: 63853  | total loss: [1m[32m0.00783[0m[0m
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习计划</a>
               </li>
              
               <li class="article-tag-list-item">

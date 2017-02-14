@@ -13,7 +13,7 @@ tags:
 In this notebook, we'll continue Andrew Trask's work by building a network for sentiment analysis on the movie review data. Instead of a network written with Numpy, we'll be using [TFLearn](http://tflearn.org/), a high-level library built on top of TensorFlow. TFLearn makes it simpler to build networks just by defining the layers. It takes care of most of the details for you.
 
 We'll start off by importing all the modules we'll need, then load and prepare the data.
-
+<!---more--->
 
 ```python
 import pandas as pd
