@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://52ml.me">
-  <title>Tag: tips | 52ml</title>
+  <title>52ml</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="52ml">
-<meta property="og:url" content="http://52ml.me/tags/tips/index.html">
+<meta property="og:url" content="http://52ml.me/page/2/index.html">
 <meta property="og:site_name" content="52ml">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="52ml">
@@ -149,58 +149,110 @@
           <div id="js-content" class="content-ll">
             
   
-  
+    <article id="post-Generalized-Linear-Models" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/01/22/some-tips/" class="archive-article-date">
-  	<time datetime="2016-01-22T07:57:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-22</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/01/22/some-tips/">some tips</a>
+      <a class="article-title" href="/2016/01/13/Generalized-Linear-Models/">Generalized Linear Models</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2016/01/13/Generalized-Linear-Models/" class="archive-article-date">
+  	<time datetime="2016-01-13T14:47:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>博客地址：<a href="http://www.52ml.me" target="_blank" rel="external">52ml.me</a><br><br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">Creative Commons BY-NC-ND 3.0</a></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><br></h2><!--- 
+本人初学机器学习，为了掌握*sklearn*开始翻译该文档，如有不妥之处还请指正。
+
+
+## 1.1. 广义线性模型 [Generalized Linear Models](http://scikit-learn.org/stable/modules/linear_model.html#generalized-linear-models)
+
+The following are a set of methods intended for regression in which the target value is expected to be a linear combination of the input variables. In mathematical notion, if $\hat{y}$ is the predicted value. 
+\\[
+\hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
+\\]
+Across the module, we designate the vector w = (w_1,
+..., w_p) as coef_ and w_0 as intercept_.
+To perform classification with generalized linear models, see Logistic regression.
+
+以下方法用于回归，回归的预测值为输入变量的线性组合。在数学概念中如果$\hat{y}$是预测值，那么
+\\[
+\hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
+\\]
+在这个模块中，我们指定向量$w = (w_1, ..., w_p)$作为系数，$w_0$作为截距。
+使用广义线性模型进行*分类*，见*[Logistic回归](http://scikit-learn.org/stable/modules/linear_model.html#logistic-regression)*。
+### 1.1.1. 普通最小二乘法 [Ordinary Least Squares](http://scikit-learn.org/stable/modules/linear_model.html#ordinary-least-squares)
+
+LinearRegression fits a linear model with coefficients $w = (w_1, ..., w_p)$ to minimize the residual sum of squares between the observed responses in the dataset, and the responses predicted by the linear approximation. Mathematically it solves a problem of the form:
+$$\underset{w}{min\,} {|| X w - y||_2}^2$$
+![plot_ols_0011.png](http://scikit-learn.org/stable/_images/plot_ols_0012.png)
+<img src="http://scikit-learn.org/stable/_images/plot_ols_0012.png" width="60%" height="50%" align=center>
+LinearRegression will take in its fit method arrays X, y and will store the coefficients w of the linear model in its coef_ member:
+
+线性回归拟合一个系数为$w = (w_1, ..., w_p)$的线性模型，然后最小化数据集中的观测值和该线性模型预测值的残差平方和。数学上它可以解决以下形式的问题：
+$$\underset{w}{min\,} {|| X w - y||_2}^2$$
+<img src="http://scikit-learn.org/stable/_images/plot_ols_0012.png" width="60%" height="50%" align=center>
+
+[LinearRegression](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression)将数组X，y传到已经拟合的函数中，并将线性模型的系数w存储在coef_成员变量中:
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> sklearn <span class="keyword">import</span> linear_model</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>clf = linear_model.LinearRegression()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>clf.fit ([[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>]], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>])</div><div class="line">LinearRegression(copy_X=<span class="keyword">True</span>, fit_intercept=<span class="keyword">True</span>, n_jobs=<span class="number">1</span>, normalize=<span class="keyword">False</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>clf.coef_</div><div class="line">array([ <span class="number">0.5</span>,  <span class="number">0.5</span>])</div></pre></td></tr></table></figure>
+<p>However, coefficient estimates for Ordinary Least Squares rely on the independence of the model terms. When terms are correlated and the columns of the design matrix X have an approximate linear dependence, the design matrix becomes close to singular and as a result, the least-squares estimate becomes highly sensitive to random errors in the observed response, producing a large variance. This situation of multicollinearity can arise, for example, when data are collected without an experimental design.<br>—&gt;</p>
+-->
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">tips</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ml</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/01/13/Generalized-Linear-Models/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
+
+
+
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
+  
 
 
           </div>
@@ -222,10 +274,10 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
+		isHome: true,
 		isPost: false,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",

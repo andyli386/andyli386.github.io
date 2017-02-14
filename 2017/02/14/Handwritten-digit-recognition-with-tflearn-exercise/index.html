@@ -6,14 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://52ml.me">
-  <title>Tag: tips | 52ml</title>
+  <title>Handwritten digit recognition with tflearn exercise | 52ml</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="52ml">
-<meta property="og:url" content="http://52ml.me/tags/tips/index.html">
+  <meta name="description" content="Handwritten Number Recognition with TFLearn and MNISTIn this notebook, we’ll be building a neural network that recognizes handwritten numbers 0-9. 
+This kind of neural network is used in a variety of">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Handwritten digit recognition with tflearn exercise">
+<meta property="og:url" content="http://52ml.me/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/index.html">
 <meta property="og:site_name" content="52ml">
+<meta property="og:description" content="Handwritten Number Recognition with TFLearn and MNISTIn this notebook, we’ll be building a neural network that recognizes handwritten numbers 0-9. 
+This kind of neural network is used in a variety of">
+<meta property="og:image" content="http://52ml.me/assets/img/handwritten_digits_recognition/output_6_0.png">
+<meta property="og:updated_time" content="2017-02-14T09:47:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="52ml">
+<meta name="twitter:title" content="Handwritten digit recognition with tflearn exercise">
+<meta name="twitter:description" content="Handwritten Number Recognition with TFLearn and MNISTIn this notebook, we’ll be building a neural network that recognizes handwritten numbers 0-9. 
+This kind of neural network is used in a variety of">
+<meta name="twitter:image" content="http://52ml.me/assets/img/handwritten_digits_recognition/output_6_0.png">
   
     <link rel="alternative" href="/atom.xml" title="52ml" type="application/atom+xml">
   
@@ -147,60 +156,206 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Handwritten-digit-recognition-with-tflearn-exercise" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/01/22/some-tips/" class="archive-article-date">
-  	<time datetime="2016-01-22T07:57:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-22</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/01/22/some-tips/">some tips</a>
+    <h1 class="article-title" itemprop="name">
+      Handwritten digit recognition with tflearn exercise
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">tips</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        <a href="/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/" class="archive-article-date">
+  	<time datetime="2017-02-14T09:41:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Handwritten-Number-Recognition-with-TFLearn-and-MNIST"><a href="#Handwritten-Number-Recognition-with-TFLearn-and-MNIST" class="headerlink" title="Handwritten Number Recognition with TFLearn and MNIST"></a>Handwritten Number Recognition with TFLearn and MNIST</h1><p>In this notebook, we’ll be building a neural network that recognizes handwritten numbers 0-9. </p>
+<p>This kind of neural network is used in a variety of real-world applications including: recognizing phone numbers and sorting postal mail by address. To build the network, we’ll be using the <strong>MNIST</strong> data set, which consists of images of handwritten numbers and their correct labels 0-9.</p>
+<p>We’ll be using <a href="http://tflearn.org/" target="_blank" rel="external">TFLearn</a>, a high-level library built on top of TensorFlow to build the neural network. We’ll start off by importing all the modules we’ll need, then load the data, and finally build the network.<br><a id="more"></a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Import Numpy, TensorFlow, TFLearn, and MNIST data</span></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">import</span> tflearn</div><div class="line"><span class="keyword">import</span> tflearn.datasets.mnist <span class="keyword">as</span> mnist</div></pre></td></tr></table></figure>
+<h2 id="Retrieving-training-and-test-data"><a href="#Retrieving-training-and-test-data" class="headerlink" title="Retrieving training and test data"></a>Retrieving training and test data</h2><p>The MNIST data set already contains both training and test data. There are 55,000 data points of training data, and 10,000 points of test data.</p>
+<p>Each MNIST data point has:</p>
+<ol>
+<li>an image of a handwritten digit and </li>
+<li>a corresponding label (a number 0-9 that identifies the image)</li>
+</ol>
+<p>We’ll call the images, which will be the input to our neural network, <strong>X</strong> and their corresponding labels <strong>Y</strong>.</p>
+<p>We’re going to want our labels as <em>one-hot vectors</em>, which are vectors that holds mostly 0’s and one 1. It’s easiest to see this in a example. As a one-hot vector, the number 0 is represented as [1, 0, 0, 0, 0, 0, 0, 0, 0, 0], and 4 is represented as [0, 0, 0, 0, 1, 0, 0, 0, 0, 0].</p>
+<h3 id="Flattened-data"><a href="#Flattened-data" class="headerlink" title="Flattened data"></a>Flattened data</h3><p>For this example, we’ll be using <em>flattened</em> data or a representation of MNIST images in one dimension rather than two. So, each handwritten number image, which is 28x28 pixels, will be represented as a one dimensional array of 784 pixel values. </p>
+<p>Flattening the data throws away information about the 2D structure of the image, but it simplifies our data so that all of the training data can be contained in one array whose shape is [55000, 784]; the first dimension is the number of training images and the second dimension is the number of pixels in each image. This is the kind of data that is easy to analyze using a simple neural network.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf;</div><div class="line"><span class="keyword">print</span> (tf.__version__)</div></pre></td></tr></table></figure>
+<pre><code>0.12.1
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Retrieve the training and test data</span></div><div class="line">mnist.SOURCE_URL = <span class="string">'https://web.archive.org/web/20160117040036/http://yann.lecun.com/exdb/mnist/'</span></div><div class="line">trainX, trainY, testX, testY = mnist.load_data(one_hot=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<pre><code>Extracting mnist/train-images-idx3-ubyte.gz
+Extracting mnist/train-labels-idx1-ubyte.gz
+Extracting mnist/t10k-images-idx3-ubyte.gz
+Extracting mnist/t10k-labels-idx1-ubyte.gz
+</code></pre><h2 id="Visualize-the-training-data"><a href="#Visualize-the-training-data" class="headerlink" title="Visualize the training data"></a>Visualize the training data</h2><p>Provided below is a function that will help you visualize the MNIST data. By passing in the index of a training example, the function <code>show_digit</code> will display that training image along with it’s corresponding label in the title.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Visualizing the data</span></div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">%matplotlib inline</div><div class="line"></div><div class="line"><span class="comment"># Function for displaying a training image by it's index in the MNIST set</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_digit</span><span class="params">(index)</span>:</span></div><div class="line">    label = trainY[index].argmax(axis=<span class="number">0</span>)</div><div class="line">    <span class="comment"># Reshape 784 array into 28x28 image</span></div><div class="line">    image = trainX[index].reshape([<span class="number">28</span>,<span class="number">28</span>])</div><div class="line">    plt.title(<span class="string">'Training data, index: %d,  Label: %d'</span> % (index, label))</div><div class="line">    plt.imshow(image, cmap=<span class="string">'gray_r'</span>)</div><div class="line">    plt.show()</div><div class="line">    </div><div class="line"><span class="comment"># Display the first (index 0) training image</span></div><div class="line">show_digit(<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p><img src="/assets/img/handwritten_digits_recognition/output_6_0.png" alt="png"></p>
+<h2 id="Building-the-network"><a href="#Building-the-network" class="headerlink" title="Building the network"></a>Building the network</h2><p>TFLearn lets you build the network by defining the layers in that network. </p>
+<p>For this example, you’ll define:</p>
+<ol>
+<li>The input layer, which tells the network the number of inputs it should expect for each piece of MNIST data. </li>
+<li>Hidden layers, which recognize patterns in data and connect the input to the output layer, and</li>
+<li>The output layer, which defines how the network learns and outputs a label for a given image.</li>
+</ol>
+<p>Let’s start with the input layer; to define the input layer, you’ll define the type of data that the network expects. For example,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net = tflearn.input_data([None, 100])</div></pre></td></tr></table></figure>
+<p>would create a network with 100 inputs. The number of inputs to your network needs to match the size of your data. For this example, we’re using 784 element long vectors to encode our input data, so we need <strong>784 input units</strong>.</p>
+<h3 id="Adding-layers"><a href="#Adding-layers" class="headerlink" title="Adding layers"></a>Adding layers</h3><p>To add new hidden layers, you use </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net = tflearn.fully_connected(net, n_units, activation=&apos;ReLU&apos;)</div></pre></td></tr></table></figure>
+<p>This adds a fully connected layer where every unit (or node) in the previous layer is connected to every unit in this layer. The first argument <code>net</code> is the network you created in the <code>tflearn.input_data</code> call, it designates the input to the hidden layer. You can set the number of units in the layer with <code>n_units</code>, and set the activation function with the <code>activation</code> keyword. You can keep adding layers to your network by repeated calling <code>tflearn.fully_connected(net, n_units)</code>. </p>
+<p>Then, to set how you train the network, use:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net = tflearn.regression(net, optimizer=&apos;sgd&apos;, learning_rate=0.1, loss=&apos;categorical_crossentropy&apos;)</div></pre></td></tr></table></figure>
+<p>Again, this is passing in the network you’ve been building. The keywords: </p>
+<ul>
+<li><code>optimizer</code> sets the training method, here stochastic gradient descent</li>
+<li><code>learning_rate</code> is the learning rate</li>
+<li><code>loss</code> determines how the network error is calculated. In this example, with categorical cross-entropy.</li>
+</ul>
+<p>Finally, you put all this together to create the model with <code>tflearn.DNN(net)</code>.</p>
+<p><strong>Exercise:</strong> Below in the <code>build_model()</code> function, you’ll put together the network using TFLearn. You get to choose how many layers to use, how many hidden units, etc.</p>
+<p><strong>Hint:</strong> The final output layer must have 10 output nodes (one for each digit 0-9). It’s also recommended to use a <code>softmax</code> activation layer as your final output layer. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Define the neural network</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_model</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment"># This resets all parameters and variables, leave this here</span></div><div class="line">    tf.reset_default_graph()</div><div class="line">    </div><div class="line">    <span class="comment">#### Your code ####</span></div><div class="line">    <span class="comment"># Include the input layer, hidden layer(s), and set how you want to train the model</span></div><div class="line">    net = tflearn.input_data([<span class="keyword">None</span>, <span class="number">784</span>])</div><div class="line">    net = tflearn.fully_connected(net, <span class="number">100</span>, activation=<span class="string">'ReLU'</span>)</div><div class="line">    <span class="comment">#net = tflearn.fully_connected(net, 20, activation='ReLU')</span></div><div class="line">    net = tflearn.fully_connected(net, <span class="number">10</span>, activation=<span class="string">'softmax'</span>) </div><div class="line">    net = tflearn.regression(net, optimizer=<span class="string">'sgd'</span>, learning_rate=<span class="number">0.1</span>, loss=<span class="string">'categorical_crossentropy'</span>)</div><div class="line">    <span class="comment"># This model assumes that your network is named "net"    </span></div><div class="line">    model = tflearn.DNN(net)</div><div class="line">    <span class="keyword">return</span> model</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Build the model</span></div><div class="line">model = build_model()</div></pre></td></tr></table></figure>
+<h2 id="Training-the-network"><a href="#Training-the-network" class="headerlink" title="Training the network"></a>Training the network</h2><p>Now that we’ve constructed the network, saved as the variable <code>model</code>, we can fit it to the data. Here we use the <code>model.fit</code> method. You pass in the training features <code>trainX</code> and the training targets <code>trainY</code>. Below I set <code>validation_set=0.1</code> which reserves 10% of the data set as the validation set. You can also set the batch size and number of epochs with the <code>batch_size</code> and <code>n_epoch</code> keywords, respectively. </p>
+<p>Too few epochs don’t effectively train your network, and too many take a long time to execute. Choose wisely!</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Training</span></div><div class="line">model.fit(trainX, trainY, validation_set=<span class="number">0.1</span>, show_metric=<span class="keyword">True</span>, batch_size=<span class="number">100</span>, n_epoch=<span class="number">8</span>)</div></pre></td></tr></table></figure>
+<pre><code>Training Step: 3959  | total loss: [1m[32m0.20021[0m[0m | time: 1.809s
+| SGD | epoch: 008 | loss: 0.20021 - acc: 0.9639 -- iter: 49400/49500
+Training Step: 3960  | total loss: [1m[32m0.19631[0m[0m | time: 2.826s
+| SGD | epoch: 008 | loss: 0.19631 - acc: 0.9645 | val_loss: 0.14357 - val_acc: 0.9600 -- iter: 49500/49500
+--
+</code></pre><h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><p>After you’re satisified with the training output and accuracy, you can then run the network on the <strong>test data set</strong> to measure it’s performance! Remember, only do this after you’ve done the training and are satisfied with the results.</p>
+<p>A good result will be <strong>higher than 98% accuracy</strong>! Some simple models have been known to get up to 99.7% accuracy.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Compare the labels that our model predicts with the actual labels</span></div><div class="line">predictions = (np.array(model.predict(testX))[:,<span class="number">0</span>] &gt;= <span class="number">0.5</span>).astype(np.int_)</div><div class="line"></div><div class="line"><span class="comment"># Calculate the accuracy, which is the percentage of times the predicated labels matched the actual labels</span></div><div class="line">test_accuracy = np.mean(predictions == testY[:,<span class="number">0</span>], axis=<span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="comment"># Print out the result</span></div><div class="line">print(<span class="string">"Test accuracy: "</span>, test_accuracy)</div></pre></td></tr></table></figure>
+<pre><code>Test accuracy:  0.9951
+</code></pre><hr>
+<p>博客地址：<a href="http://www.52ml.me" target="_blank" rel="external">52ml.me</a><br><br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">Creative Commons BY-NC-ND 3.0</a></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><br></h2>
+      
 
-          
-
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://52ml.me/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/02/13/Sentiment-analysis-with-TFLearn/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Sentiment analysis with TFLearn</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -223,9 +378,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",

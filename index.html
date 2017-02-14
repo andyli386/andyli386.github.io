@@ -149,6 +149,61 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Handwritten-digit-recognition-with-tflearn-exercise" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/">Handwritten digit recognition with tflearn exercise</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/" class="archive-article-date">
+  	<time datetime="2017-02-14T09:41:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Handwritten-Number-Recognition-with-TFLearn-and-MNIST"><a href="#Handwritten-Number-Recognition-with-TFLearn-and-MNIST" class="headerlink" title="Handwritten Number Recognition with TFLearn and MNIST"></a>Handwritten Number Recognition with TFLearn and MNIST</h1><p>In this notebook, we’ll be building a neural network that recognizes handwritten numbers 0-9. </p>
+<p>This kind of neural network is used in a variety of real-world applications including: recognizing phone numbers and sorting postal mail by address. To build the network, we’ll be using the <strong>MNIST</strong> data set, which consists of images of handwritten numbers and their correct labels 0-9.</p>
+<p>We’ll be using <a href="http://tflearn.org/">TFLearn</a>, a high-level library built on top of TensorFlow to build the neural network. We’ll start off by importing all the modules we’ll need, then load the data, and finally build the network.<br>
+        
+          <a class="article-more-a" href="/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-Sentiment-analysis-with-TFLearn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -169,11 +224,129 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Sentiment-analysis-with-TFLearn"><a href="#Sentiment-analysis-with-TFLearn" class="headerlink" title="Sentiment analysis with TFLearn"></a>Sentiment analysis with TFLearn</h1><p>In this notebook, we’ll continue Andrew Trask’s work by building a network for sentiment analysis on the movie review data. Instead of a network written with Numpy, we’ll be using <a href="http://tflearn.org/">TFLearn</a>, a high-level library built on top of TensorFlow. TFLearn makes it simpler to build networks just by defining the layers. It takes care of most of the details for you.</p>
-<p>We’ll start off by importing all the modules we’ll need, then load and prepare the data.<br>
-        
-          <a class="article-more-a" href="/2017/02/13/Sentiment-analysis-with-TFLearn/#more">more >></a>
-        
+        <h1 id="Sentiment-analysis-with-TFLearn"><a href="#Sentiment-analysis-with-TFLearn" class="headerlink" title="Sentiment analysis with TFLearn"></a>Sentiment analysis with TFLearn</h1><p>In this notebook, we’ll continue Andrew Trask’s work by building a network for sentiment analysis on the movie review data. Instead of a network written with Numpy, we’ll be using <a href="http://tflearn.org/" target="_blank" rel="external">TFLearn</a>, a high-level library built on top of TensorFlow. TFLearn makes it simpler to build networks just by defining the layers. It takes care of most of the details for you.</p>
+<p>We’ll start off by importing all the modules we’ll need, then load and prepare the data.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">import</span> tflearn</div><div class="line"><span class="keyword">from</span> tflearn.data_utils <span class="keyword">import</span> to_categorical</div></pre></td></tr></table></figure>
+<h2 id="Preparing-the-data"><a href="#Preparing-the-data" class="headerlink" title="Preparing the data"></a>Preparing the data</h2><p>Following along with Andrew, our goal here is to convert our reviews into word vectors. The word vectors will have elements representing words in the total vocabulary. If the second position represents the word ‘the’, for each review we’ll count up the number of times ‘the’ appears in the text and set the second position to that count. I’ll show you examples as we build the input data from the reviews data. Check out Andrew’s notebook and video for more about this.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">reviews = pd.read_csv(<span class="string">'reviews.txt'</span>, header=<span class="keyword">None</span>)</div><div class="line">labels = pd.read_csv(<span class="string">'labels.txt'</span>, header=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
+<h3 id="Counting-word-frequency"><a href="#Counting-word-frequency" class="headerlink" title="Counting word frequency"></a>Counting word frequency</h3><p>To start off we’ll need to count how often each word appears in the data. We’ll use this count to create a vocabulary we’ll use to encode the review data. This resulting count is known as a <a href="https://en.wikipedia.org/wiki/Bag-of-words_model" target="_blank" rel="external">bag of words</a>. We’ll use it to select our vocabulary and build the word vectors. You should have seen how to do this in Andrew’s lesson. Try to implement it here using the <a href="https://docs.python.org/2/library/collections.html#collections.Counter" target="_blank" rel="external">Counter class</a>.</p>
+<blockquote>
+<p><strong>Exercise:</strong> Create the bag of words from the reviews data and assign it to <code>total_counts</code>. The reviews are stores in the <code>reviews</code> <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html" target="_blank" rel="external">Pandas DataFrame</a>. If you want the reviews as a Numpy array, use <code>reviews.values</code>. You can iterate through the rows in the DataFrame with <code>for idx, row in reviews.iterrows():</code> (<a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.iterrows.html" target="_blank" rel="external">documentation</a>).</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</div><div class="line"></div><div class="line">total_counts = Counter()</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(reviews)):</div><div class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> reviews.values[i][<span class="number">0</span>].split(<span class="string">" "</span>):</div><div class="line">        total_counts[word] += <span class="number">1</span></div><div class="line"></div><div class="line">print(<span class="string">"Total words in data set: "</span>, len(total_counts))</div></pre></td></tr></table></figure>
+<pre><code>Total words in data set:  74074
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</div><div class="line">total_counts1 = Counter()</div><div class="line"><span class="keyword">for</span> ii, (_, review) <span class="keyword">in</span> enumerate(reviews.iterrows()):</div><div class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> review[<span class="number">0</span>].split(<span class="string">" "</span>):</div><div class="line">        total_counts1[word] += <span class="number">1</span></div><div class="line"></div><div class="line">print(<span class="string">"Total words in data set: "</span>, len(total_counts))</div></pre></td></tr></table></figure>
+<pre><code>Total words in data set:  74074
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">assert</span>(total_counts == total_counts1)</div></pre></td></tr></table></figure>
+<p>Let’s keep the first 10000 most frequent words. As Andrew noted, most of the words in the vocabulary are rarely used so they will have little effect on our predictions. Below, we’ll sort <code>vocab</code> by the count value and keep the 10000 most frequent words.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vocab = sorted(total_counts, key=total_counts.get, reverse=<span class="keyword">True</span>)[:<span class="number">10000</span>]</div><div class="line">print(vocab[:<span class="number">60</span>])</div></pre></td></tr></table></figure>
+<pre><code>[&apos;&apos;, &apos;the&apos;, &apos;.&apos;, &apos;and&apos;, &apos;a&apos;, &apos;of&apos;, &apos;to&apos;, &apos;is&apos;, &apos;br&apos;, &apos;it&apos;, &apos;in&apos;, &apos;i&apos;, &apos;this&apos;, &apos;that&apos;, &apos;s&apos;, &apos;was&apos;, &apos;as&apos;, &apos;for&apos;, &apos;with&apos;, &apos;movie&apos;, &apos;but&apos;, &apos;film&apos;, &apos;you&apos;, &apos;on&apos;, &apos;t&apos;, &apos;not&apos;, &apos;he&apos;, &apos;are&apos;, &apos;his&apos;, &apos;have&apos;, &apos;be&apos;, &apos;one&apos;, &apos;all&apos;, &apos;at&apos;, &apos;they&apos;, &apos;by&apos;, &apos;an&apos;, &apos;who&apos;, &apos;so&apos;, &apos;from&apos;, &apos;like&apos;, &apos;there&apos;, &apos;her&apos;, &apos;or&apos;, &apos;just&apos;, &apos;about&apos;, &apos;out&apos;, &apos;if&apos;, &apos;has&apos;, &apos;what&apos;, &apos;some&apos;, &apos;good&apos;, &apos;can&apos;, &apos;more&apos;, &apos;she&apos;, &apos;when&apos;, &apos;very&apos;, &apos;up&apos;, &apos;time&apos;, &apos;no&apos;]
+</code></pre><p>What’s the last word in our vocabulary? We can use this to judge if 10000 is too few. If the last word is pretty common, we probably need to keep more words.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print(vocab[<span class="number">-1</span>], <span class="string">': '</span>, total_counts[vocab[<span class="number">-1</span>]])</div></pre></td></tr></table></figure>
+<pre><code>excesses :  30
+</code></pre><p>The last word in our vocabulary shows up in 30 reviews out of 25000. I think it’s fair to say this is a tiny proportion of reviews. We are probably fine with this number of words.</p>
+<p>Now for each review in the data, we’ll make a word vector. First we need to make a mapping of word to index, pretty easy to do with a dictionary comprehension.</p>
+<blockquote>
+<p><strong>Exercise:</strong> Create a dictionary called <code>word2idx</code> that maps each word in the vocabulary to an index. The first word in <code>vocab</code> has index <code>0</code>, the second word has index <code>1</code>, and so on.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">word2idx = &#123;&#125; <span class="comment">## create the word-to-index dictionary here</span></div><div class="line"><span class="keyword">for</span> i, word <span class="keyword">in</span> enumerate(vocab):</div><div class="line">    word2idx[word] = i</div></pre></td></tr></table></figure>
+<h3 id="Text-to-vector-function"><a href="#Text-to-vector-function" class="headerlink" title="Text to vector function"></a>Text to vector function</h3><p>Now we can write a function that converts a some text to a word vector. The function will take a string of words as input and return a vector with the words counted up. Here’s the general algorithm to do this:</p>
+<ul>
+<li>Initialize the word vector with <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.zeros.html" target="_blank" rel="external">np.zeros</a>, it should be the length of the vocabulary.</li>
+<li>Split the input string of text into a list of words with <code>.split(&#39; &#39;)</code>.</li>
+<li>For each word in that list, increment the element in the index associated with that word, which you get from <code>word2idx</code>.</li>
+</ul>
+<p><strong>Note:</strong> Since all words aren’t in the <code>vocab</code> dictionary, you’ll get a key error if you run into one of those words. You can use the <code>.get</code> method of the <code>word2idx</code> dictionary to specify a default returned value when you make a key error. For example, <code>word2idx.get(word, None)</code> returns <code>None</code> if <code>word</code> doesn’t exist in the dictionary.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">len(<span class="string">'The tea is for a party to celebrate '</span></div><div class="line">               <span class="string">'the movie so she has no time for a cake'</span>)</div></pre></td></tr></table></figure>
+<pre><code>75
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">text_to_vector</span><span class="params">(text)</span>:</span></div><div class="line">    </div><div class="line">    word_vector = np.zeros(len(vocab), dtype=np.int_)</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> text.split(<span class="string">' '</span>):</div><div class="line">        idx = word2idx.get(word, <span class="keyword">None</span>)</div><div class="line">        <span class="keyword">if</span> idx != <span class="keyword">None</span>:</div><div class="line">            word_vector[idx] += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> word_vector</div></pre></td></tr></table></figure>
+<p>If you do this right, the following code should return</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">text_to_vector(&apos;The tea is for a party to celebrate &apos;</div><div class="line">               &apos;the movie so she has no time for a cake&apos;)[:65]</div><div class="line">                   </div><div class="line">array([0, 1, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0,</div><div class="line">       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,</div><div class="line">       0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0])</div><div class="line">```       </div><div class="line"></div><div class="line"></div><div class="line">```python</div><div class="line">test_example = np.array([0, 1, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0,</div><div class="line">       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,</div><div class="line">       0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0])</div><div class="line">assert((text_to_vector(&apos;The tea is for a party to celebrate &apos;</div><div class="line">               &apos;the movie so she has no time for a cake&apos;)[:65] == test_example).all())</div></pre></td></tr></table></figure>
+<p>Now, run through our entire review data set and convert each review to a word vector.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">word_vectors = np.zeros((len(reviews), len(vocab)), dtype=np.int_)</div><div class="line"></div><div class="line"><span class="keyword">for</span> ii, (_, text) <span class="keyword">in</span> enumerate(reviews.iterrows()):</div><div class="line">    <span class="comment">#print(a, text)</span></div><div class="line">    word_vectors[ii] = text_to_vector(text[<span class="number">0</span>])</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reviews.iterrows()</div></pre></td></tr></table></figure>
+<pre><code>&lt;generator object DataFrame.iterrows at 0x119410308&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Printing out the first 5 word vectors</span></div><div class="line">word_vectors[:<span class="number">5</span>, :<span class="number">23</span>]</div></pre></td></tr></table></figure>
+<pre><code>array([[ 18,   9,  27,   1,   4,   4,   6,   4,   0,   2,   2,   5,   0,
+          4,   1,   0,   2,   0,   0,   0,   0,   0,   0],
+       [  5,   4,   8,   1,   7,   3,   1,   2,   0,   4,   0,   0,   0,
+          1,   2,   0,   0,   1,   3,   0,   0,   0,   1],
+       [ 78,  24,  12,   4,  17,   5,  20,   2,   8,   8,   2,   1,   1,
+          2,   8,   0,   5,   5,   4,   0,   2,   1,   4],
+       [167,  53,  23,   0,  22,  23,  13,  14,   8,  10,   8,  12,   9,
+          4,  11,   2,  11,   5,  11,   0,   5,   3,   0],
+       [ 19,  10,  11,   4,   6,   2,   2,   5,   0,   1,   2,   3,   1,
+          0,   0,   0,   3,   1,   0,   1,   0,   0,   0]])
+</code></pre><h3 id="Train-Validation-Test-sets"><a href="#Train-Validation-Test-sets" class="headerlink" title="Train, Validation, Test sets"></a>Train, Validation, Test sets</h3><p>Now that we have the word_vectors, we’re ready to split our data into train, validation, and test sets. Remember that we train on the train data, use the validation data to set the hyperparameters, and at the very end measure the network performance on the test data. Here we’re using the function <code>to_categorical</code> from TFLearn to reshape the target data so that we’ll have two output units and can classify with a softmax activation function. We actually won’t be creating the validation set here, TFLearn will do that for us later.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Y = (labels==<span class="string">'positive'</span>).astype(np.int_)</div><div class="line">records = len(labels)</div><div class="line"></div><div class="line">shuffle = np.arange(records)</div><div class="line"></div><div class="line">np.random.shuffle(shuffle)</div><div class="line"></div><div class="line">test_fraction = <span class="number">0.9</span></div><div class="line"></div><div class="line">train_split, test_split = shuffle[:int(records*test_fraction)], shuffle[int(records*test_fraction):]</div><div class="line"></div><div class="line">trainX, trainY = word_vectors[train_split,:], to_categorical(Y.values[train_split], <span class="number">2</span>)</div><div class="line">testX, testY = word_vectors[test_split,:], to_categorical(Y.values[test_split], <span class="number">2</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">trainY</div></pre></td></tr></table></figure>
+<pre><code>array([[ 0.,  1.],
+       [ 0.,  1.],
+       [ 0.,  1.],
+       ..., 
+       [ 0.,  1.],
+       [ 0.,  1.],
+       [ 0.,  1.]])
+</code></pre><h2 id="Building-the-network"><a href="#Building-the-network" class="headerlink" title="Building the network"></a>Building the network</h2><p><a href="http://tflearn.org/" target="_blank" rel="external">TFLearn</a> lets you build the network by <a href="http://tflearn.org/layers/core/" target="_blank" rel="external">defining the layers</a>. </p>
+<h3 id="Input-layer"><a href="#Input-layer" class="headerlink" title="Input layer"></a>Input layer</h3><p>For the input layer, you just need to tell it how many units you have. For example, </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net = tflearn.input_data([None, 100])</div></pre></td></tr></table></figure>
+<p>would create a network with 100 input units. The first element in the list, <code>None</code> in this case, sets the batch size. Setting it to <code>None</code> here leaves it at the default batch size.</p>
+<p>The number of inputs to your network needs to match the size of your data. For this example, we’re using 10000 element long vectors to encode our input data, so we need 10000 input units.</p>
+<h3 id="Adding-layers"><a href="#Adding-layers" class="headerlink" title="Adding layers"></a>Adding layers</h3><p>To add new hidden layers, you use </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net = tflearn.fully_connected(net, n_units, activation=&apos;ReLU&apos;)</div></pre></td></tr></table></figure>
+<p>This adds a fully connected layer where every unit in the previous layer is connected to every unit in this layer. The first argument <code>net</code> is the network you created in the <code>tflearn.input_data</code> call. It’s telling the network to use the output of the previous layer as the input to this layer. You can set the number of units in the layer with <code>n_hidden</code>, and set the activation function with the <code>activation</code> keyword. You can keep adding layers to your network by repeated calling <code>net = tflearn.fully_connected(net, n_units)</code>.</p>
+<h3 id="Output-layer"><a href="#Output-layer" class="headerlink" title="Output layer"></a>Output layer</h3><p>The last layer you add is used as the output layer. There for, you need to set the number of units to match the target data. In this case we are predicting two classes, positive or negative sentiment. You also need to set the activation function so it’s appropriate for your model. Again, we’re trying to predict if some input data belongs to one of two classes, so we should use softmax.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net = tflearn.fully_connected(net, 2, activation=&apos;softmax&apos;)</div></pre></td></tr></table></figure>
+<h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><p>To set how you train the network, use </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net = tflearn.regression(net, optimizer=&apos;sgd&apos;, learning_rate=0.1, loss=&apos;categorical_crossentropy&apos;)</div></pre></td></tr></table></figure>
+<p>Again, this is passing in the network you’ve been building. The keywords: </p>
+<ul>
+<li><code>optimizer</code> sets the training method, here stochastic gradient descent</li>
+<li><code>learning_rate</code> is the learning rate</li>
+<li><code>loss</code> determines how the network error is calculated. In this example, with the categorical cross-entropy.</li>
+</ul>
+<p>Finally you put all this together to create the model with <code>tflearn.DNN(net)</code>. So it ends up looking something like </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">net = tflearn.input_data([None, 10])                          # Input</div><div class="line">net = tflearn.fully_connected(net, 5, activation=&apos;ReLU&apos;)      # Hidden</div><div class="line">net = tflearn.fully_connected(net, 2, activation=&apos;softmax&apos;)   # Output</div><div class="line">net = tflearn.regression(net, optimizer=&apos;sgd&apos;, learning_rate=0.1, loss=&apos;categorical_crossentropy&apos;)</div><div class="line">model = tflearn.DNN(net)</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Exercise:</strong> Below in the <code>build_model()</code> function, you’ll put together the network using TFLearn. You get to choose how many layers to use, how many hidden units, etc.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Network building</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_model</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment"># This resets all parameters and variables, leave this here</span></div><div class="line">    tf.reset_default_graph()</div><div class="line">    </div><div class="line">    <span class="comment">#### Your code ####</span></div><div class="line">    net = tflearn.input_data([<span class="keyword">None</span>, <span class="number">10000</span>])                          <span class="comment"># Input</span></div><div class="line">    net = tflearn.fully_connected(net, <span class="number">200</span>, activation=<span class="string">'ReLU'</span>)      <span class="comment"># Hidden</span></div><div class="line">    net = tflearn.fully_connected(net, <span class="number">25</span>, activation=<span class="string">'ReLU'</span>)</div><div class="line">    net = tflearn.fully_connected(net, <span class="number">2</span>, activation=<span class="string">'softmax'</span>)   <span class="comment"># Output</span></div><div class="line">    net = tflearn.regression(net, optimizer=<span class="string">'sgd'</span>, learning_rate=<span class="number">0.1</span>, loss=<span class="string">'categorical_crossentropy'</span>)</div><div class="line"></div><div class="line">    model = tflearn.DNN(net)</div><div class="line">    <span class="keyword">return</span> model</div></pre></td></tr></table></figure>
+<h2 id="Intializing-the-model"><a href="#Intializing-the-model" class="headerlink" title="Intializing the model"></a>Intializing the model</h2><p>Next we need to call the <code>build_model()</code> function to actually build the model. In my solution I haven’t included any arguments to the function, but you can add arguments so you can change parameters in the model if you want.</p>
+<blockquote>
+<p><strong>Note:</strong> You might get a bunch of warnings here. TFLearn uses a lot of deprecated code in TensorFlow. Hopefully it gets updated to the new TensorFlow version soon.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">model = build_model()</div></pre></td></tr></table></figure>
+<pre><code>WARNING:tensorflow:From /Users/vincent/anaconda/envs/tflearn/lib/python3.5/site-packages/tflearn/summaries.py:46 in get_summary.: scalar_summary (from tensorflow.python.ops.logging_ops) is deprecated and will be removed after 2016-11-30.
+Instructions for updating:
+Please switch to tf.summary.scalar. Note that tf.summary.scalar uses the node name instead of the tag. This means that TensorFlow will automatically de-duplicate summary names based on the scope they are created in. Also, passing a tensor or list of tags to a scalar summary op is no longer supported.
+WARNING:tensorflow:From /Users/vincent/anaconda/envs/tflearn/lib/python3.5/site-packages/tflearn/summaries.py:46 in get_summary.: scalar_summary (from tensorflow.python.ops.logging_ops) is deprecated and will be removed after 2016-11-30.
+Instructions for updating:
+Please switch to tf.summary.scalar. Note that tf.summary.scalar uses the node name instead of the tag. This means that TensorFlow will automatically de-duplicate summary names based on the scope they are created in. Also, passing a tensor or list of tags to a scalar summary op is no longer supported.
+WARNING:tensorflow:From /Users/vincent/anaconda/envs/tflearn/lib/python3.5/site-packages/tflearn/helpers/trainer.py:766 in create_summaries.: merge_summary (from tensorflow.python.ops.logging_ops) is deprecated and will be removed after 2016-11-30.
+Instructions for updating:
+Please switch to tf.summary.merge.
+WARNING:tensorflow:VARIABLES collection name is deprecated, please use GLOBAL_VARIABLES instead; VARIABLES will be removed after 2017-03-02.
+WARNING:tensorflow:From /Users/vincent/anaconda/envs/tflearn/lib/python3.5/site-packages/tflearn/helpers/trainer.py:130 in __init__.: initialize_all_variables (from tensorflow.python.ops.variables) is deprecated and will be removed after 2017-03-02.
+Instructions for updating:
+Use `tf.global_variables_initializer` instead.
+</code></pre><h2 id="Training-the-network"><a href="#Training-the-network" class="headerlink" title="Training the network"></a>Training the network</h2><p>Now that we’ve constructed the network, saved as the variable <code>model</code>, we can fit it to the data. Here we use the <code>model.fit</code> method. You pass in the training features <code>trainX</code> and the training targets <code>trainY</code>. Below I set <code>validation_set=0.1</code> which reserves 10% of the data set as the validation set. You can also set the batch size and number of epochs with the <code>batch_size</code> and <code>n_epoch</code> keywords, respectively. Below is the code to fit our the network to our word vectors.</p>
+<p>You can rerun <code>model.fit</code> to train the network further if you think you can increase the validation accuracy. Remember, all hyperparameter adjustments must be done using the validation set. <strong>Only use the test set after you’re completely done training the network.</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Training</span></div><div class="line">model.fit(trainX, trainY, validation_set=<span class="number">0.1</span>, show_metric=<span class="keyword">True</span>, batch_size=<span class="number">128</span>, n_epoch=<span class="number">100</span>)</div></pre></td></tr></table></figure>
+<pre><code>Training Step: 63853  | total loss: [1m[32m0.00783[0m[0m
+| SGD | epoch: 100 | loss: 0.00783 - acc: 0.9984 | val_loss: 0.05305 - val_acc: 0.9827 -- iter: 20250/20250
+Training Step: 63853  | total loss: [1m[32m0.00783[0m[0m
+| SGD | epoch: 100 | loss: 0.00783 - acc: 0.9984 | val_loss: 0.05305 - val_acc: 0.9827 -- iter: 20250/20250
+--
+</code></pre><h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><p>After you’re satisified with your hyperparameters, you can run the network on the test set to measure it’s performance. Remember, <em>only do this after finalizing the hyperparameters</em>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">predictions = (np.array(model.predict(testX))[:,<span class="number">0</span>] &gt;= <span class="number">0.5</span>).astype(np.int_)</div><div class="line">test_accuracy = np.mean(predictions == testY[:,<span class="number">0</span>], axis=<span class="number">0</span>)</div><div class="line">print(<span class="string">"Test accuracy: "</span>, test_accuracy)</div></pre></td></tr></table></figure>
+<pre><code>Test accuracy:  0.864
+</code></pre><h2 id="Try-out-your-own-text"><a href="#Try-out-your-own-text" class="headerlink" title="Try out your own text!"></a>Try out your own text!</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">text = <span class="string">"This movie is so bad. It was awful and the worst"</span></div><div class="line">positive_prob = model.predict([text_to_vector(text.lower())])[<span class="number">0</span>][<span class="number">1</span>]</div><div class="line">print(<span class="string">'P(positive) = &#123;:.3f&#125; :'</span>.format(positive_prob), </div><div class="line">      <span class="string">'Positive'</span> <span class="keyword">if</span> positive_prob &gt; <span class="number">0.5</span> <span class="keyword">else</span> <span class="string">'Negative'</span>)</div></pre></td></tr></table></figure>
+<pre><code>P(positive) = 0.000 : Negative
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">text = <span class="string">"This food is so delicious. It was wonderful"</span></div><div class="line">positive_prob = model.predict([text_to_vector(text.lower())])[<span class="number">0</span>][<span class="number">1</span>]</div><div class="line">print(<span class="string">'P(positive) = &#123;:.3f&#125; :'</span>.format(positive_prob), </div><div class="line">      <span class="string">'Positive'</span> <span class="keyword">if</span> positive_prob &gt; <span class="number">0.5</span> <span class="keyword">else</span> <span class="string">'Negative'</span>)</div></pre></td></tr></table></figure>
+<pre><code>P(positive) = 1.000 : Positive
+</code></pre><hr>
+<p>博客地址：<a href="http://www.52ml.me" target="_blank" rel="external">52ml.me</a><br><br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">Creative Commons BY-NC-ND 3.0</a></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><br></h2>
       
 
       
@@ -845,105 +1018,10 @@
 
 
   
-    <article id="post-Generalized-Linear-Models" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/13/Generalized-Linear-Models/">Generalized Linear Models</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/13/Generalized-Linear-Models/" class="archive-article-date">
-  	<time datetime="2016-01-13T14:47:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>博客地址：<a href="http://www.52ml.me" target="_blank" rel="external">52ml.me</a><br><br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">Creative Commons BY-NC-ND 3.0</a></p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><br></h2><!--- 
-本人初学机器学习，为了掌握*sklearn*开始翻译该文档，如有不妥之处还请指正。
-
-
-## 1.1. 广义线性模型 [Generalized Linear Models](http://scikit-learn.org/stable/modules/linear_model.html#generalized-linear-models)
-
-The following are a set of methods intended for regression in which the target value is expected to be a linear combination of the input variables. In mathematical notion, if $\hat{y}$ is the predicted value. 
-\\[
-\hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
-\\]
-Across the module, we designate the vector w = (w_1,
-..., w_p) as coef_ and w_0 as intercept_.
-To perform classification with generalized linear models, see Logistic regression.
-
-以下方法用于回归，回归的预测值为输入变量的线性组合。在数学概念中如果$\hat{y}$是预测值，那么
-\\[
-\hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
-\\]
-在这个模块中，我们指定向量$w = (w_1, ..., w_p)$作为系数，$w_0$作为截距。
-使用广义线性模型进行*分类*，见*[Logistic回归](http://scikit-learn.org/stable/modules/linear_model.html#logistic-regression)*。
-### 1.1.1. 普通最小二乘法 [Ordinary Least Squares](http://scikit-learn.org/stable/modules/linear_model.html#ordinary-least-squares)
-
-LinearRegression fits a linear model with coefficients $w = (w_1, ..., w_p)$ to minimize the residual sum of squares between the observed responses in the dataset, and the responses predicted by the linear approximation. Mathematically it solves a problem of the form:
-$$\underset{w}{min\,} {|| X w - y||_2}^2$$
-![plot_ols_0011.png](http://scikit-learn.org/stable/_images/plot_ols_0012.png)
-<img src="http://scikit-learn.org/stable/_images/plot_ols_0012.png" width="60%" height="50%" align=center>
-LinearRegression will take in its fit method arrays X, y and will store the coefficients w of the linear model in its coef_ member:
-
-线性回归拟合一个系数为$w = (w_1, ..., w_p)$的线性模型，然后最小化数据集中的观测值和该线性模型预测值的残差平方和。数学上它可以解决以下形式的问题：
-$$\underset{w}{min\,} {|| X w - y||_2}^2$$
-<img src="http://scikit-learn.org/stable/_images/plot_ols_0012.png" width="60%" height="50%" align=center>
-
-[LinearRegression](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression)将数组X，y传到已经拟合的函数中，并将线性模型的系数w存储在coef_成员变量中:
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> sklearn <span class="keyword">import</span> linear_model</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>clf = linear_model.LinearRegression()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>clf.fit ([[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>]], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>])</div><div class="line">LinearRegression(copy_X=<span class="keyword">True</span>, fit_intercept=<span class="keyword">True</span>, n_jobs=<span class="number">1</span>, normalize=<span class="keyword">False</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>clf.coef_</div><div class="line">array([ <span class="number">0.5</span>,  <span class="number">0.5</span>])</div></pre></td></tr></table></figure>
-<p>However, coefficient estimates for Ordinary Least Squares rely on the independence of the model terms. When terms are correlated and the columns of the design matrix X have an approximate linear dependence, the design matrix becomes close to singular and as a result, the least-squares estimate becomes highly sensitive to random errors in the observed response, producing a large variance. This situation of multicollinearity can arise, for example, when data are collected without an experimental design.<br>—&gt;</p>
--->
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ml</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/01/13/Generalized-Linear-Models/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1041,7 +1119,7 @@ $$\underset{w}{min\,} {|| X w - y||_2}^2$$
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MLND</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习计划</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1053,7 +1131,7 @@ $$\underset{w}{min\,} {|| X w - y||_2}^2$$
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习计划</a>
+                <a href="javascript:void(0)" class="js-tag color5">MLND</a>
               </li>
             
             <div class="clearfix"></div>

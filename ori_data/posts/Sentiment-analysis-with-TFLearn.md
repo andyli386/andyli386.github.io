@@ -7,12 +7,13 @@ tags:
 - 机器学习
 ---
 
+
 # Sentiment analysis with TFLearn
 
 In this notebook, we'll continue Andrew Trask's work by building a network for sentiment analysis on the movie review data. Instead of a network written with Numpy, we'll be using [TFLearn](http://tflearn.org/), a high-level library built on top of TensorFlow. TFLearn makes it simpler to build networks just by defining the layers. It takes care of most of the details for you.
 
 We'll start off by importing all the modules we'll need, then load and prepare the data.
-<!--more-->
+
 
 ```python
 import pandas as pd
@@ -136,7 +137,7 @@ len('The tea is for a party to celebrate '
 ```python
 def text_to_vector(text):
     
-    word_vector = np.zeros(len(vocab))
+    word_vector = np.zeros(len(vocab), dtype=np.int_)
     
     for word in text.split(' '):
         idx = word2idx.get(word, None)
@@ -149,19 +150,17 @@ def text_to_vector(text):
 
 If you do this right, the following code should return
 
-
-```python
+```
 text_to_vector('The tea is for a party to celebrate '
                'the movie so she has no time for a cake')[:65]
-             
-
-
+                   
 array([0, 1, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0,
        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
        0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0])
- 
+```       
 
-     
+
+```python
 test_example = np.array([0, 1, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0,
        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
        0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0])
@@ -180,6 +179,15 @@ for ii, (_, text) in enumerate(reviews.iterrows()):
     word_vectors[ii] = text_to_vector(text[0])
 ```
 
+
+```python
+reviews.iterrows()
+```
+
+
+
+
+    <generator object DataFrame.iterrows at 0x119410308>
 
 
 
@@ -313,7 +321,8 @@ def build_model():
     
     #### Your code ####
     net = tflearn.input_data([None, 10000])                          # Input
-    net = tflearn.fully_connected(net, 5, activation='ReLU')      # Hidden
+    net = tflearn.fully_connected(net, 200, activation='ReLU')      # Hidden
+    net = tflearn.fully_connected(net, 25, activation='ReLU')
     net = tflearn.fully_connected(net, 2, activation='softmax')   # Output
     net = tflearn.regression(net, optimizer='sgd', learning_rate=0.1, loss='categorical_crossentropy')
 
@@ -356,13 +365,13 @@ You can rerun `model.fit` to train the network further if you think you can incr
 
 ```python
 # Training
-model.fit(trainX, trainY, validation_set=0.1, show_metric=True, batch_size=128, n_epoch=300)
+model.fit(trainX, trainY, validation_set=0.1, show_metric=True, batch_size=128, n_epoch=100)
 ```
 
-    Training Step: 89040  | total loss: [1m[32m0.16807[0m[0m
-    | SGD | epoch: 300 | loss: 0.16807 - acc: 0.9318 | val_loss: 0.39082 - val_acc: 0.8467 -- iter: 20250/20250
-    Training Step: 89040  | total loss: [1m[32m0.16807[0m[0m
-    | SGD | epoch: 300 | loss: 0.16807 - acc: 0.9318 | val_loss: 0.39082 - val_acc: 0.8467 -- iter: 20250/20250
+    Training Step: 63853  | total loss: [1m[32m0.00783[0m[0m
+    | SGD | epoch: 100 | loss: 0.00783 - acc: 0.9984 | val_loss: 0.05305 - val_acc: 0.9827 -- iter: 20250/20250
+    Training Step: 63853  | total loss: [1m[32m0.00783[0m[0m
+    | SGD | epoch: 100 | loss: 0.00783 - acc: 0.9984 | val_loss: 0.05305 - val_acc: 0.9827 -- iter: 20250/20250
     --
 
 
@@ -377,7 +386,7 @@ test_accuracy = np.mean(predictions == testY[:,0], axis=0)
 print("Test accuracy: ", test_accuracy)
 ```
 
-    Test accuracy:  0.8504
+    Test accuracy:  0.864
 
 
 ## Try out your own text!
@@ -390,7 +399,7 @@ print('P(positive) = {:.3f} :'.format(positive_prob),
       'Positive' if positive_prob > 0.5 else 'Negative')
 ```
 
-    P(positive) = 0.026 : Negative
+    P(positive) = 0.000 : Negative
 
 
 
@@ -401,7 +410,7 @@ print('P(positive) = {:.3f} :'.format(positive_prob),
       'Positive' if positive_prob > 0.5 else 'Negative')
 ```
 
-    P(positive) = 0.991 : Positive
+    P(positive) = 1.000 : Positive
 
 
 
