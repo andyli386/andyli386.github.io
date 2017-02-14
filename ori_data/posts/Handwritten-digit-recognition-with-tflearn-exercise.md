@@ -2,6 +2,9 @@
 title: Handwritten digit recognition with tflearn exercise
 date: 2017-02-14 17:41:20
 tags:
+- 纳米学位 
+- DLND
+- 机器学习
 ---
 
 
