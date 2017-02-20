@@ -6,14 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://52ml.me">
-  <title>52ml</title>
+  <title>Tensorflow mac 安装遇到的问题 | 52ml</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="52ml">
-<meta property="og:url" content="http://52ml.me/index.html">
+  <meta name="description" content="tensorflow 使用conda forge源安装的步骤是：1234conda create -n tensorflow python=3.5source activate tensorflowconda install pandas matplotlib jupyter notebook scipy scikit-learnconda install -c conda-forge tenso">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow mac 安装遇到的问题">
+<meta property="og:url" content="http://52ml.me/2017/02/20/Tensorflow-mac-安装遇到的问题/index.html">
 <meta property="og:site_name" content="52ml">
+<meta property="og:description" content="tensorflow 使用conda forge源安装的步骤是：1234conda create -n tensorflow python=3.5source activate tensorflowconda install pandas matplotlib jupyter notebook scipy scikit-learnconda install -c conda-forge tenso">
+<meta property="og:updated_time" content="2017-02-20T11:16:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="52ml">
+<meta name="twitter:title" content="Tensorflow mac 安装遇到的问题">
+<meta name="twitter:description" content="tensorflow 使用conda forge源安装的步骤是：1234conda create -n tensorflow python=3.5source activate tensorflowconda install pandas matplotlib jupyter notebook scipy scikit-learnconda install -c conda-forge tenso">
   
     <link rel="alternative" href="/atom.xml" title="52ml" type="application/atom+xml">
   
@@ -147,16 +151,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Tensorflow-mac-安装遇到的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Tensorflow-mac-安装遇到的问题" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/20/Tensorflow-mac-安装遇到的问题/">Tensorflow mac 安装遇到的问题</a>
+    <h1 class="article-title" itemprop="name">
+      Tensorflow mac 安装遇到的问题
     </h1>
   
 
@@ -170,11 +172,46 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>tensorflow 使用conda forge源安装的步骤是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">conda create -n tensorflow python=3.5</div><div class="line">source activate tensorflow</div><div class="line">conda install pandas matplotlib jupyter notebook scipy scikit-learn</div><div class="line">conda install -c conda-forge tensorflow</div></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2017/02/20/Tensorflow-mac-安装遇到的问题/#more">more >></a>
-        
+<a id="more"></a>
+<p>最后一步时会安装protobuf，由于网络问题导致安装失败，出现错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CondaError: CondaHTTPError: HTTP None None for url &lt;None&gt;</div><div class="line">Elapsed: None</div><div class="line"></div><div class="line">An HTTP error occurred when trying to retrieve this URL.</div><div class="line">ConnectionError(ReadTimeoutError(&quot;HTTPSConnectionPool(host=&apos;binstar-cio-packages-prod.s3.amazonaws.com&apos;, port=443): Read timed out.&quot;,),)</div></pre></td></tr></table></figure>
+<p>解决办法参考<a href="http://blog.csdn.net/zhangweijiqn/article/details/53199553" target="_blank" rel="external">《tensorflow在linux系统上的安装》</a><br>具体方法：</p>
+<ol>
+<li>分别到<a href="https://anaconda.org/conda-forge/protobuf/files" target="_blank" rel="external">protobuf</a>和<a href="https://anaconda.org/conda-forge/tensorflow/files" target="_blank" rel="external">tensorflow</a>下载对应版本的安装包。</li>
+<li>将下载的安装包放到anaconda/pkgs这个目录下，需要重命名。</li>
+<li>用conda install path_to_file直接安装。</li>
+</ol>
+<hr>
+<p>博客地址：<a href="http://www.52ml.me" target="_blank" rel="external">52ml.me</a><br><br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">Creative Commons BY-NC-ND 3.0</a></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><br></h2>
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -194,18 +231,74 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/20/Tensorflow-mac-安装遇到的问题/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://52ml.me/2017/02/20/Tensorflow-mac-安装遇到的问题/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
 
-
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Handwritten digit recognition with tflearn exercise</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
 
 
@@ -213,634 +306,10 @@
 
 
   
-    <article id="post-Handwritten-digit-recognition-with-tflearn-exercise" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/">Handwritten digit recognition with tflearn exercise</a>
-    </h1>
+    <div class="duoshuo"></div>
   
 
-        
-        <a href="/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/" class="archive-article-date">
-  	<time datetime="2017-02-14T09:41:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Handwritten-Number-Recognition-with-TFLearn-and-MNIST"><a href="#Handwritten-Number-Recognition-with-TFLearn-and-MNIST" class="headerlink" title="Handwritten Number Recognition with TFLearn and MNIST"></a>Handwritten Number Recognition with TFLearn and MNIST</h1><p>In this notebook, we’ll be building a neural network that recognizes handwritten numbers 0-9. </p>
-<p>This kind of neural network is used in a variety of real-world applications including: recognizing phone numbers and sorting postal mail by address. To build the network, we’ll be using the <strong>MNIST</strong> data set, which consists of images of handwritten numbers and their correct labels 0-9.</p>
-<p>We’ll be using <a href="http://tflearn.org/">TFLearn</a>, a high-level library built on top of TensorFlow to build the neural network. We’ll start off by importing all the modules we’ll need, then load the data, and finally build the network.<br>
-        
-          <a class="article-more-a" href="/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/#more">more >></a>
-        
-      
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">纳米学位</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">DLND</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/14/Handwritten-digit-recognition-with-tflearn-exercise/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Sentiment-analysis-with-TFLearn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/13/Sentiment-analysis-with-TFLearn/">Sentiment analysis with TFLearn</a>
-    </h1>
-  
-
-        
-        <a href="/2017/02/13/Sentiment-analysis-with-TFLearn/" class="archive-article-date">
-  	<time datetime="2017-02-13T11:08:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Sentiment-analysis-with-TFLearn"><a href="#Sentiment-analysis-with-TFLearn" class="headerlink" title="Sentiment analysis with TFLearn"></a>Sentiment analysis with TFLearn</h1><p>In this notebook, we’ll continue Andrew Trask’s work by building a network for sentiment analysis on the movie review data. Instead of a network written with Numpy, we’ll be using <a href="http://tflearn.org/">TFLearn</a>, a high-level library built on top of TensorFlow. TFLearn makes it simpler to build networks just by defining the layers. It takes care of most of the details for you.</p>
-<p>We’ll start off by importing all the modules we’ll need, then load and prepare the data.<br>
-        
-          <a class="article-more-a" href="/2017/02/13/Sentiment-analysis-with-TFLearn/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">纳米学位</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">DLND</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/13/Sentiment-analysis-with-TFLearn/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-How-To-Frame-Problems-for-a-Neural-Network" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/12/How-To-Frame-Problems-for-a-Neural-Network/">How To &quot;Frame Problems&quot; for a Neural Network</a>
-    </h1>
-  
-
-        
-        <a href="/2017/02/12/How-To-Frame-Problems-for-a-Neural-Network/" class="archive-article-date">
-  	<time datetime="2017-02-12T13:01:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Sentiment-Classification-amp-How-To-“Frame-Problems”-for-a-Neural-Network"><a href="#Sentiment-Classification-amp-How-To-“Frame-Problems”-for-a-Neural-Network" class="headerlink" title="Sentiment Classification &amp; How To “Frame Problems” for a Neural Network"></a>Sentiment Classification &amp; How To “Frame Problems” for a Neural Network</h1><p>by Andrew Trask</p>
-<ul>
-<li><strong>Twitter</strong>: @iamtrask</li>
-<li><strong>Blog</strong>: <a href="http://iamtrask.github.io">http://iamtrask.github.io</a></li>
-</ul>
-<h3 id="What-You-Should-Already-Know"><a href="#What-You-Should-Already-Know" class="headerlink" title="What You Should Already Know"></a>What You Should Already Know</h3><ul>
-<li>neural networks, forward and back-propagation</li>
-<li>stochastic gradient descent</li>
-<li>mean squared error</li>
-<li>and train/test splits</li>
-</ul>
-<h3 id="Where-to-Get-Help-if-You-Need-it"><a href="#Where-to-Get-Help-if-You-Need-it" class="headerlink" title="Where to Get Help if You Need it"></a>Where to Get Help if You Need it</h3><ul>
-<li>Re-watch previous Udacity Lectures</li>
-<li>Leverage the recommended Course Reading Material - <a href="https://www.manning.com/books/grokking-deep-learning">Grokking Deep Learning</a> (40% Off: <strong>traskud17</strong>)</li>
-<li>Shoot me a tweet @iamtrask
-        
-          <a class="article-more-a" href="/2017/02/12/How-To-Frame-Problems-for-a-Neural-Network/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">纳米学位</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">DLND</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/12/How-To-Frame-Problems-for-a-Neural-Network/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Predicting-daily-bike-rental-ridership" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/05/Predicting-daily-bike-rental-ridership/">Predicting daily bike rental ridership</a>
-    </h1>
-  
-
-        
-        <a href="/2017/02/05/Predicting-daily-bike-rental-ridership/" class="archive-article-date">
-  	<time datetime="2017-02-05T05:36:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Your-first-neural-network"><a href="#Your-first-neural-network" class="headerlink" title="Your first neural network"></a>Your first neural network</h1><p>In this project, you’ll build your first neural network and use it to predict daily bike rental ridership. We’ve provided some of the code, but left the implementation of the neural network up to you (for the most part). After you’ve submitted this project, feel free to explore the data and the model more.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">%matplotlib inline</div><div class="line">%config InlineBackend.figure_format = <span class="string">'retina'</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2017/02/05/Predicting-daily-bike-rental-ridership/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">纳米学位</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">DLND</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/05/Predicting-daily-bike-rental-ridership/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-预测波士顿房价" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/预测波士顿房价/">预测波士顿房价</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/21/预测波士顿房价/" class="archive-article-date">
-  	<time datetime="2017-01-21T07:02:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="模型评价与验证"><a href="#模型评价与验证" class="headerlink" title="模型评价与验证"></a>模型评价与验证</h2><h2 id="项目-1-预测波士顿房价"><a href="#项目-1-预测波士顿房价" class="headerlink" title="项目 1: 预测波士顿房价"></a>项目 1: 预测波士顿房价</h2><p>欢迎来到机器学习工程师纳米学位的第一个项目！在此文件中，有些示例代码已经提供给你，但你还需要实现更多的功能来让项目成功运行。除非有明确要求，你无须修改任何已给出的代码。以<strong>‘练习’</strong>开始的标题表示接下来的内容中有需要你必须实现的功能。每一部分都会有详细的指导，需要实现的部分也会在注释中以<strong>‘TODO’</strong>标出。请仔细阅读所有的提示！</p>
-<p>除了实现代码外，你还<strong>必须</strong>回答一些与项目和实现有关的问题。每一个需要你回答的问题都会以<strong>‘问题 X’</strong>为标题。请仔细阅读每个问题，并且在问题后的<strong>‘回答’</strong>文字框中写出完整的答案。你的项目将会根据你对问题的回答和撰写代码所实现的功能来进行评分。</p>
-<blockquote>
-<p><strong>提示：</strong>Code 和 Markdown 区域可通过 <strong>Shift + Enter</strong> 快捷键运行。此外，Markdown可以通过双击进入编辑模式。</p>
-</blockquote>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2>
-        
-          <a class="article-more-a" href="/2017/01/21/预测波士顿房价/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">纳米学位</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MLND</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/预测波士顿房价/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Android-彩蛋路径" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/28/Android-彩蛋路径/">Android 彩蛋路径</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/28/Android-彩蛋路径/" class="archive-article-date">
-  	<time datetime="2016-01-28T06:59:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>彩蛋路径是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android/frameworks/base/packages/SystemUI/src/com/android/systemui/egg</div></pre></td></tr></table></figure></p>
-<hr>
-<p>博客地址：<a href="http://www.52ml.me" target="_blank" rel="external">52ml.me</a><br><br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">Creative Commons BY-NC-ND 3.0</a></p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><br></h2>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/01/28/Android-彩蛋路径/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-some-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/22/some-tips/">some tips</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/22/some-tips/" class="archive-article-date">
-  	<time datetime="2016-01-22T07:57:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="adb模拟点击"><a href="#adb模拟点击" class="headerlink" title="adb模拟点击"></a>adb模拟点击</h2><p>ADB中通过input来实现，用于输入touch，key等事件：<br>The sources are: trackball joystick touchnavigation mouse keyboard gamepad touchpad dpad stylus touchscreen<br>
-        
-          <a class="article-more-a" href="/2016/01/22/some-tips/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">tips</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/01/22/some-tips/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-classification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/16/classification/">Image Classification -- Data-driven Approach, k-Nearest Neighbor, train/val/test splits</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/16/classification/" class="archive-article-date">
-  	<time datetime="2016-01-16T14:04:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文翻译的是这篇<a href="http://cs231n.github.io/classification/">CS231n Convolutional Neural Networks for Visual Recognition</a>文章。</p>
-<h2 id="图像分类"><a href="#图像分类" class="headerlink" title="图像分类"></a>图像分类</h2><p><strong>原因</strong> 这一节我们将介绍图像分类问题，这是一个从一组固定类别中指定输入图像标签的任务。这是计算机视觉中的一个核心问题，尽管它简单，在实际中有各种各样的应用。此外，我们会在使用过程中看到，许多其他看似不同的计算机视觉任务（如目标检测，分割）可以归结为图像分类。</p>
-<p><strong>例子</strong> 例如，下图中一个图像分类模型获取一张图片然后指定四个标签的<em>{cat, dog, hat, mug}</em>概率。如图所示，请记住，图像在计算机中表示为一个大的三维数组。在这个例子中，猫的图片宽度为248像素，高度为400像素，并且有三个颜色通道：Red，Green，Blue（或者缩写为RGB）。因此，图像由248×400×3或总共297600个数字组成。每个数字是一个整数，范围从0（黑色）到255（白色）。我们的任务是将百万数据中得四分之一标记为单一的标签，如“猫”。</p>
-<hr>
-<p><img src="http://cs231n.github.io/assets/classify.png" alt="classify"></p>
-<p><font size=2><em>图像分类</em>的任务是对于一个给定的图像预测一个标签（或这里显示的不同标签下概率分布，用以表示我们的信任）。图像是整数三维数组，整数的范围从0到255，图像的大小是宽度x高度x3。3表示三个颜色通道：Red，Green，Blue。</font></p>
-<hr>
-        
-          <a class="article-more-a" href="/2016/01/16/classification/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">cs231n</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/01/16/classification/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Mac-sed-坑" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/16/Mac-sed-坑/">Mac sed 坑</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/16/Mac-sed-坑/" class="archive-article-date">
-  	<time datetime="2016-01-16T02:47:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="坑1"><a href="#坑1" class="headerlink" title="坑1"></a>坑1</h2><p>执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sed -i <span class="string">"s/xxx/yyy/g"</span> filename</div></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2016/01/16/Mac-sed-坑/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/01/16/Mac-sed-坑/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -862,8 +331,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
